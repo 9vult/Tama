@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Tama.Core/Tama.Core.csproj" />
+  <Project Path="Tama.Discord/Tama.Discord.csproj" />
+  <Project Path="Tama.Domain/Tama.Domain.csproj" />
+  <Project Path="Tama.Host/Tama.Host.csproj" />
+</Solution>
