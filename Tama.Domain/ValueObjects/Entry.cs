@@ -21,7 +21,10 @@ public sealed class Entry
     public required string Title { get; set; }
 
     [MaxLength(Length.Url)]
-    public required string Url { get; set; }
+    public required string ImageUrl { get; set; }
+
+    [MaxLength(Length.Url)]
+    public required string SubmissionUrl { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 }
