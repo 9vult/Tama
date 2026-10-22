@@ -3,9 +3,9 @@
 namespace Tama.Domain.Entities;
 
 public abstract class MappedId<TId>
-    where TId : IVogen<TId, Guid>
+    where TId : IVogen<TId, ulong>
 {
-    public TId Id { get; init; } = TId.From(Guid.NewGuid());
+    public TId Id { get; init; } = TId.From(0);
     public ulong? DiscordId { get; init; }
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
 

@@ -4,6 +4,5 @@ using Vogen;
 
 namespace Tama.Domain.ValueObjects;
 
-[ValueObject<Guid>]
-[Instance("Unset", "Guid.Empty")]
+[ValueObject<ulong>]
 public readonly partial struct ChannelId;

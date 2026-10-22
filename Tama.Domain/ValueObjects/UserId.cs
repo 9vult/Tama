@@ -4,5 +4,5 @@ using Vogen;
 
 namespace Tama.Domain.ValueObjects;
 
-[ValueObject<Guid>]
+[ValueObject<ulong>]
 public readonly partial struct UserId;
