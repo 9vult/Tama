@@ -11,13 +11,8 @@ public sealed class Bracket
     public BracketId Id { get; set; } = BracketId.FromNewGuid();
 
     public required GroupId GroupId { get; set; }
-    public Group Group { get; set; } = null!;
-
     public required ChannelId ChannelId { get; set; }
-    public Channel Channel { get; set; } = null!;
-
     public required UserId CreatorId { get; set; }
-    public User Creator { get; set; } = null!;
 
     /// <summary>
     /// Title of the bracket

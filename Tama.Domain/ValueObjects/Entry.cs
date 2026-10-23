@@ -13,7 +13,6 @@ public sealed class Entry
     public Bracket Bracket { get; set; } = null!;
 
     public required UserId SubmitterId { get; set; }
-    public User Submitter { get; set; } = null!;
 
     public required int Seed { get; set; }
 

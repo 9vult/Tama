@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Tama.Domain.Entities;
 using Tama.Domain.ValueObjects;
 using Vogen;
 
@@ -17,6 +18,10 @@ public class TamaDbContext(DbContextOptions<TamaDbContext> options) : DbContext(
     {
         Converters = { new JsonStringEnumConverter() },
     };
+
+    public DbSet<Bracket> Brackets { get; init; } = null!;
+    public DbSet<Match> Matches { get; init; } = null!;
+    public DbSet<Entry> Entries { get; set; } = null!;
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder builder)
