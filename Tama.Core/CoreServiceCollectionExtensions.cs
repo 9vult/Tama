@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tama.Core.Events;
 using Tama.Core.Features.Commands;
 using Tama.Core.Features.Queries;
 
@@ -38,6 +39,9 @@ public static class CoreServiceCollectionExtensions
             .ToList();
         foreach (var handler in handlers)
             services.AddScoped(handler);
+
+        // Events
+        services.AddScoped<IEventBus, InMemoryEventBus>();
 
         return services;
 
