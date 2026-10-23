@@ -10,7 +10,7 @@ public sealed class Match
     public MatchId Id { get; init; } = MatchId.FromNewGuid();
 
     public required BracketId BracketId { get; init; }
-    public Bracket Bracket { get; set; } = null!;
+    public Bracket Bracket { get; init; } = null!;
 
     /// <summary>
     /// Round in the bracket, 0-indexed
@@ -40,7 +40,7 @@ public sealed class Match
     /// <summary>
     /// Current state of the match
     /// </summary>
-    public MatchState State { get; set; } = MatchState.Pending;
+    public MatchState State { get; init; } = MatchState.Pending;
 
     /// <summary>
     /// ID of the entry in the left box. <see langword="null"/> if position is TBD.
@@ -80,5 +80,5 @@ public sealed class Match
     /// <summary>
     /// Time the match was created
     /// </summary>
-    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
 }

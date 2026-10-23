@@ -8,80 +8,80 @@ namespace Tama.Domain.Entities;
 
 public sealed class Bracket
 {
-    public BracketId Id { get; set; } = BracketId.FromNewGuid();
+    public BracketId Id { get; init; } = BracketId.FromNewGuid();
 
-    public required GroupId GroupId { get; set; }
-    public required ChannelId ChannelId { get; set; }
-    public required UserId CreatorId { get; set; }
+    public required GroupId GroupId { get; init; }
+    public required ChannelId ChannelId { get; init; }
+    public required UserId CreatorId { get; init; }
 
     /// <summary>
     /// Title of the bracket
     /// </summary>
     [MaxLength(Length.Title)]
-    public required string Title { get; set; }
+    public required string Title { get; init; }
 
     /// <summary>
     /// <see langword="true"/> if ties are allowed in the finals
     /// </summary>
-    public required bool AllowTie { get; set; }
+    public required bool AllowTie { get; init; }
 
     /// <summary>
     /// Number of entries to allow
     /// </summary>
-    public required int EntryLimit { get; set; }
+    public required int EntryLimit { get; init; }
 
     /// <summary>
     /// Number of matches to run concurrently
     /// </summary>
-    public required int MaxConcurrentMatches { get; set; }
+    public required int MaxConcurrentMatches { get; init; }
 
     /// <summary>
     /// Duration of each match
     /// </summary>
-    public required MatchDuration MatchDuration { get; set; }
+    public required MatchDuration MatchDuration { get; init; }
 
     /// <summary>
     /// Allow opening theme submissions
     /// </summary>
-    public required bool AllowOpenings { get; set; }
+    public required bool AllowOpenings { get; init; }
 
     /// <summary>
     /// Allow ending theme submissions
     /// </summary>
-    public required bool AllowEndings { get; set; }
+    public required bool AllowEndings { get; init; }
 
     /// <summary>
     /// Allow insert theme submissions
     /// </summary>
-    public required bool AllowInserts { get; set; }
+    public required bool AllowInserts { get; init; }
 
     /// <summary>
     /// Current state of the bracket
     /// </summary>
-    public MatchState State { get; set; } = MatchState.Pending;
+    public MatchState State { get; init; } = MatchState.Pending;
 
     /// <summary>
     /// List of champion IDs
     /// </summary>
-    public ICollection<EntryId> ChampionIds { get; set; } = [];
+    public ICollection<EntryId> ChampionIds { get; init; } = [];
 
     /// <summary>
     /// List of champions
     /// </summary>
-    public ICollection<Entry> Champions { get; set; } = [];
+    public ICollection<Entry> Champions { get; init; } = [];
 
     /// <summary>
     /// List of entries
     /// </summary>
-    public ICollection<Entry> Entries { get; set; } = [];
+    public ICollection<Entry> Entries { get; init; } = [];
 
     /// <summary>
     /// List of matches
     /// </summary>
-    public ICollection<Match> Matches { get; set; } = [];
+    public ICollection<Match> Matches { get; init; } = [];
 
     /// <summary>
     /// Time the bracket was created
     /// </summary>
-    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
 }
