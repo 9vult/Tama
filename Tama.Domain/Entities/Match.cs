@@ -25,7 +25,7 @@ public sealed class Match
     /// <summary>
     /// ID of the match this match seeds into. <see langword="null"/> if this is the finals
     /// </summary>
-    public required MatchId? NextId { get; set; }
+    public MatchId? NextId { get; set; }
 
     /// <summary>
     /// Match this match seeds into. <see langword="null"/> if this is the finals
@@ -65,7 +65,7 @@ public sealed class Match
     /// <summary>
     /// ID of the winning entry. <see langword="null"/> if no winner has been decided.
     /// </summary>
-    public required EntryId? WinnerId { get; set; }
+    public EntryId? WinnerId { get; set; }
 
     /// <summary>
     /// The winning entry. <see langword="null"/> if no winner has been decided.
