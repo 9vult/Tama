@@ -28,4 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tama.Domain\Tama.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>

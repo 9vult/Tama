@@ -61,16 +61,6 @@ public sealed class Bracket
     public MatchState State { get; init; } = MatchState.Pending;
 
     /// <summary>
-    /// List of champion IDs
-    /// </summary>
-    public ICollection<EntryId> ChampionIds { get; init; } = [];
-
-    /// <summary>
-    /// List of champions
-    /// </summary>
-    public ICollection<Entry> Champions { get; init; } = [];
-
-    /// <summary>
     /// List of entries
     /// </summary>
     public ICollection<Entry> Entries { get; init; } = [];

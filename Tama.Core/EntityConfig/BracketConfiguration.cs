@@ -13,12 +13,12 @@ public sealed class BracketConfiguration : IEntityTypeConfiguration<Bracket>
     {
         bracket
             .HasMany(b => b.Entries)
-            .WithOne()
+            .WithOne(e => e.Bracket)
             .HasForeignKey(e => e.BracketId)
             .OnDelete(DeleteBehavior.Cascade);
         bracket
             .HasMany(b => b.Matches)
-            .WithOne()
+            .WithOne(m => m.Bracket)
             .HasForeignKey(m => m.BracketId)
             .OnDelete(DeleteBehavior.Cascade);
     }
