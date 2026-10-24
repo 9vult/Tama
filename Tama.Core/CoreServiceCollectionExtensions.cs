@@ -50,6 +50,7 @@ public static class CoreServiceCollectionExtensions
 
         // EventHandlers
         services.AddScoped<IEventHandler<EntrySubmittedEvent>, EntrySubmittedEventHandler>();
+        services.AddScoped<IEventHandler<BracketReadyEvent>, BracketReadyEventHandler>();
 
         return services;
 

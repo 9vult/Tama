@@ -45,7 +45,7 @@ public sealed class Match
     /// <summary>
     /// Current state of the match
     /// </summary>
-    public MatchState State { get; init; } = MatchState.Pending;
+    public MatchState State { get; set; } = MatchState.Pending;
 
     /// <summary>
     /// ID of the entry in the left box. <see langword="null"/> if position is TBD.
