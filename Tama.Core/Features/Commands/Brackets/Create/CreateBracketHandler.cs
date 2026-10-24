@@ -39,6 +39,7 @@ public class CreateBracketHandler(TamaDbContext db, ILogger<CreateBracketHandler
             AllowOpenings = command.AllowOpenings,
             AllowEndings = command.AllowEndings,
             AllowInserts = command.AllowInserts,
+            DisplaySubmitters = command.DisplaySubmitters,
         };
 
         logger.LogInformation(

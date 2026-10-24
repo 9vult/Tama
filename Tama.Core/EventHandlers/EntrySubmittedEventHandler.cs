@@ -68,12 +68,20 @@ public sealed class EntrySubmittedEventHandler(
             var count = entryLimit >> (round + 1);
             for (var i = 0; i < count; i++)
             {
+                var title = (rounds - 1 - round) switch
+                {
+                    0 => "Final",
+                    1 => $"Semifinals (Match {i + 1} of {count})",
+                    _ => $"Round {round + 1} (Match {i + 1} of {count})",
+                };
+
                 matches.Add(
                     new Match
                     {
                         BracketId = bracketId,
                         Round = round,
                         Index = i,
+                        Title = title,
                         State = MatchState.Pending,
                     }
                 );

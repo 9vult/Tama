@@ -16,5 +16,6 @@ public sealed record CreateBracketCommand(
     MatchDuration MatchDuration,
     bool AllowOpenings,
     bool AllowEndings,
-    bool AllowInserts
+    bool AllowInserts,
+    bool DisplaySubmitters
 ) : ICommand;

@@ -45,16 +45,23 @@ public sealed class BracketReadyEventHandler(
                     match.Id,
                     new EntryDto(
                         match.Left!.Id,
+                        match.Left.SubmitterId,
                         match.Left.Title,
                         match.Left.ImageUrl,
                         match.Left.SubmissionUrl
                     ),
                     new EntryDto(
                         match.Right!.Id,
+                        match.Right.SubmitterId,
                         match.Right.Title,
                         match.Right.ImageUrl,
                         match.Right.SubmissionUrl
-                    )
+                    ),
+                    bracket.Title,
+                    match.Title,
+                    bracket.DisplaySubmitters,
+                    bracket.ChannelId,
+                    bracket.MatchDuration
                 )
             );
         }

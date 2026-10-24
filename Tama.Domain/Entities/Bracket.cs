@@ -56,6 +56,11 @@ public sealed class Bracket
     public required bool AllowInserts { get; init; }
 
     /// <summary>
+    /// Display the submitters for each match (does not apply to the winner)
+    /// </summary>
+    public required bool DisplaySubmitters { get; init; }
+
+    /// <summary>
     /// Current state of the bracket
     /// </summary>
     public MatchState State { get; set; } = MatchState.Pending;

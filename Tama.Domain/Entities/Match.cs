@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using System.ComponentModel.DataAnnotations;
 using Tama.Domain.Enums;
 using Tama.Domain.ValueObjects;
 
@@ -21,6 +22,12 @@ public sealed class Match
     /// Position within the round, 0-indexed
     /// </summary>
     public required int Index { get; init; }
+
+    /// <summary>
+    /// Human-readable match title
+    /// </summary>
+    [MaxLength(Length.Name)]
+    public required string Title { get; init; }
 
     /// <summary>
     /// ID of the match this match seeds into. <see langword="null"/> if this is the finals
