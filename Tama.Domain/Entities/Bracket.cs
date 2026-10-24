@@ -58,7 +58,7 @@ public sealed class Bracket
     /// <summary>
     /// Current state of the bracket
     /// </summary>
-    public MatchState State { get; init; } = MatchState.Pending;
+    public MatchState State { get; set; } = MatchState.Pending;
 
     /// <summary>
     /// List of entries
@@ -68,10 +68,25 @@ public sealed class Bracket
     /// <summary>
     /// List of matches
     /// </summary>
-    public ICollection<Match> Matches { get; init; } = [];
+    public ICollection<Match> Matches { get; set; } = [];
 
     /// <summary>
     /// Time the bracket was created
     /// </summary>
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
+
+    public void LinkMatches()
+    {
+        if (Matches.Count == 0)
+            return;
+        var byPos = Matches.ToDictionary(m => (m.Round, m.Index));
+        foreach (var match in Matches)
+        {
+            if (byPos.TryGetValue((match.Round + 1, match.Index / 2), out var next))
+            {
+                match.Next = next;
+                match.SeedsLeftOfNext = match.Index % 2 == 0;
+            }
+        }
+    }
 }

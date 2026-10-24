@@ -33,6 +33,11 @@ public sealed class Match
     public Match? Next { get; set; }
 
     /// <summary>
+    /// If this match seeds the <see cref="Left"/> side of <see cref="Next"/>
+    /// </summary>
+    public bool SeedsLeftOfNext { get; set; }
+
+    /// <summary>
     /// <see langword="true"/> if this is the final match
     /// </summary>
     public bool IsFinal => Next is null;

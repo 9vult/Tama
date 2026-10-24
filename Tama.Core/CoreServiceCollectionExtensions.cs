@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tama.Core.EventHandlers;
 using Tama.Core.Events;
 using Tama.Core.Features.Commands;
 using Tama.Core.Features.Queries;
@@ -46,6 +47,9 @@ public static class CoreServiceCollectionExtensions
 
         // Services
         services.AddScoped<IAnimeThemesService, AnimeThemesService>();
+
+        // EventHandlers
+        services.AddScoped<IEventHandler<EntrySubmittedEvent>, EntrySubmittedEventHandler>();
 
         return services;
 

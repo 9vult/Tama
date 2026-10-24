@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Tama.Core.Events;
 using Tama.Core.Services;
 using Tama.Domain.Entities;
+using Tama.Domain.Enums;
 using static Tama.Core.Features.Result;
 
 namespace Tama.Core.Features.Commands.Entries.Submit;
@@ -28,6 +29,9 @@ public sealed class SubmitEntriesCommandHandler(
             logger.LogError("Bracket {BracketId} does not exist", command.BracketId);
             return Fail(ResultStatus.NoBracket);
         }
+
+        if (bracket.State is not MatchState.Pending)
+            return Fail(ResultStatus.BadRequest, "Bracket is in progress");
 
         // Check if the user already submitted
         if (bracket.Entries.Any(e => e.SubmitterId == command.SubmitterId))

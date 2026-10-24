@@ -36,5 +36,6 @@ public sealed class MatchConfiguration : IEntityTypeConfiguration<Match>
             .OnDelete(DeleteBehavior.Restrict);
 
         match.Ignore(m => m.Next);
+        match.Ignore(m => m.SeedsLeftOfNext);
     }
 }

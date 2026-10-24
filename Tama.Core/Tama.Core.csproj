@@ -29,7 +29,6 @@
     <ProjectReference Include="..\Tama.Domain\Tama.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventHandlers\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
