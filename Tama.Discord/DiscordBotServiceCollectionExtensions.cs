@@ -29,6 +29,7 @@ public static class DiscordBotServiceCollectionExtensions
             );
             return interactionService;
         });
+        services.AddSingleton<MessageUpdateHandler>();
 
         // Handlers
         services.AddSingleton<InteractionHandler>();

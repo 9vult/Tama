@@ -6,4 +6,5 @@ public enum PollResult
 {
     Left,
     Right,
+    Tie,
 }

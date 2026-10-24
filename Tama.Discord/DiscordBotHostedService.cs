@@ -11,6 +11,7 @@ namespace Tama.Discord;
 public sealed class DiscordBotHostedService(
     DiscordSocketClient client,
     InteractionHandler interactionHandler,
+    MessageUpdateHandler messageUpdateHandler,
     IOptions<DiscordOptions> options,
     ILogger<DiscordBotHostedService> logger
 ) : IHostedService
@@ -23,6 +24,7 @@ public sealed class DiscordBotHostedService(
         client.Log += OnLog;
 
         await interactionHandler.InitializeAsync();
+        await messageUpdateHandler.InitializeAsync();
 
         await client.LoginAsync(TokenType.Bot, options.Value.Token);
         await client.StartAsync();
