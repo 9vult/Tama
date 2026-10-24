@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Tama.Core.Events;
 using Tama.Core.Features.Commands;
 using Tama.Core.Features.Queries;
+using Tama.Core.Services;
 
 namespace Tama.Core;
 
@@ -42,6 +43,9 @@ public static class CoreServiceCollectionExtensions
 
         // Events
         services.AddScoped<IEventBus, InMemoryEventBus>();
+
+        // Services
+        services.AddScoped<IAnimeThemesService, AnimeThemesService>();
 
         return services;
 
