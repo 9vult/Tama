@@ -14,16 +14,19 @@ public sealed class Entry
 
     public required UserId SubmitterId { get; set; }
 
-    public required int Seed { get; set; }
-
     [MaxLength(Length.Title)]
     public required string Title { get; set; }
+
+    [MaxLength(Length.Title)]
+    public required string UniqueThemeId { get; set; }
 
     [MaxLength(Length.Url)]
     public required string ImageUrl { get; set; }
 
     [MaxLength(Length.Url)]
     public required string SubmissionUrl { get; set; }
+
+    public int Seed { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 }

@@ -13,7 +13,7 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
     private const string BaseUrl = "https://graphql.animethemes.moe";
     private const string ATHost = "animethemes.moe";
     private const string AnimeSegment = "anime/";
-    private const string AniList = "ANILIST";
+    private const string LargeCover = "LARGE_COVER";
 
     private static readonly JsonSerializerOptions QueryJsonOptions = new()
     {
@@ -73,7 +73,7 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
                 "AnimeThemes API returned status code {StatusCode}",
                 response.StatusCode
             );
-            return new AnimeDto { Title = string.Empty, AniListUrl = string.Empty };
+            return new AnimeDto { Title = string.Empty, ImageUrl = string.Empty };
         }
 
         await using var stream = await response.Content.ReadAsStreamAsync();
@@ -82,26 +82,22 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
         if (doc.RootElement.TryGetProperty("errors", out var errors))
         {
             logger.LogError("AnimeThemes API returned errors: {Errors}", string.Join(',', errors));
-            return new AnimeDto { Title = string.Empty, AniListUrl = string.Empty };
+            return new AnimeDto { Title = string.Empty, ImageUrl = string.Empty };
         }
 
         var anime = doc.RootElement.GetProperty("data").GetProperty("anime");
         var title = anime.GetProperty("title").GetProperty("romaji").GetString();
-        var resourceCount = anime.GetProperty("resources").GetProperty("nodes").GetArrayLength();
-        var aniListUrl =
-            resourceCount > 0
+        var imageCount = anime.GetProperty("images").GetProperty("nodes").GetArrayLength();
+        var imageUrl =
+            imageCount > 0
                 ? anime
-                    .GetProperty("resources")
+                    .GetProperty("images")
                     .GetProperty("nodes")[0]
                     .GetProperty("link")
                     .GetString()
                 : string.Empty;
 
-        return new AnimeDto
-        {
-            Title = title ?? string.Empty,
-            AniListUrl = aniListUrl ?? string.Empty,
-        };
+        return new AnimeDto { Title = title ?? string.Empty, ImageUrl = imageUrl ?? string.Empty };
     }
 
     private static string GetAnimeSlug(Uri url)
@@ -116,12 +112,12 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
                 new
                 {
                     Query = """
-                    query ($slug: String!, $site: ResourceSite) {
+                    query ($slug: String!, $facet: ImageFacet) {
                       anime(slug: $slug) {
                         title {
                           romaji
                         }
-                        resources(site: $site) {
+                        images(facet: $facet) {
                           nodes {
                             link
                           }
@@ -129,7 +125,7 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
                       }
                     }
                     """,
-                    Variables = new { Slug = animeSlug, Site = AniList },
+                    Variables = new { Slug = animeSlug, Facet = LargeCover },
                 },
                 QueryJsonOptions
             ),

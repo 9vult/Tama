@@ -48,6 +48,7 @@ public class CreateBracketHandler(TamaDbContext db, ILogger<CreateBracketHandler
         );
 
         await db.Brackets.AddAsync(bracket);
+        await db.SaveChangesAsync();
         return Success(new CreateBracketResponse(bracket.Id));
     }
 }

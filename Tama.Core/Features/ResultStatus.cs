@@ -28,6 +28,16 @@ public enum ResultStatus
     BadRequest,
 
     /// <summary>
+    /// Bracket does not exist
+    /// </summary>
+    NoBracket,
+
+    /// <summary>
+    /// User already submitted to the bracket
+    /// </summary>
+    AlreadySubmitted,
+
+    /// <summary>
     /// Action can't be completed due to a bracket naming conflict
     /// </summary>
     BracketConflict,
