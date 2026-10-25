@@ -47,6 +47,7 @@ public static class CoreServiceCollectionExtensions
 
         // Services
         services.AddScoped<IAnimeThemesService, AnimeThemesService>();
+        services.AddScoped<VersionService>();
 
         // EventHandlers
         services.AddScoped<IEventHandler<TiebreakSubmittedEvent>, TiebreakSubmittedEventHandler>();

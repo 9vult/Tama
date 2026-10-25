@@ -4,11 +4,11 @@ namespace Tama.Domain.Enums;
 
 public enum MatchDuration
 {
-    OneHour,
-    FourHours,
-    EightHours,
-    OneDay,
-    ThreeDays,
-    OneWeek,
-    ThreeWeeks,
+    OneHour = 0,
+    FourHours = 1,
+    EightHours = 2,
+    OneDay = 3,
+    ThreeDays = 4,
+    OneWeek = 5,
+    ThreeWeeks = 6,
 }
