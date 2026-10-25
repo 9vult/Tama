@@ -51,5 +51,14 @@ public sealed class MessageUpdateHandler(
         {
             await eventBus.PublishAsync(new MatchTiedEvent(pollInfo.Value.MatchId));
         }
+
+        // Lock the thread
+        if (message.Thread is not null)
+        {
+            await message.Thread.ModifyAsync(thread =>
+            {
+                thread.Locked = true;
+            });
+        }
     }
 }
