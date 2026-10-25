@@ -1,21 +1,15 @@
 // SPDX-License-Identifier: MPL-2.0
 
-using System.Numerics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tama.Core.Dtos;
 using Tama.Core.Events;
-using Tama.Domain.Entities;
 using Tama.Domain.Enums;
-using Tama.Domain.ValueObjects;
 
 namespace Tama.Core.EventHandlers;
 
-public sealed class BracketReadyEventHandler(
-    TamaDbContext db,
-    IEventBus eventBus,
-    ILogger<BracketReadyEventHandler> logger
-) : IEventHandler<BracketReadyEvent>
+public sealed class BracketReadyEventHandler(TamaDbContext db, IEventBus eventBus)
+    : IEventHandler<BracketReadyEvent>
 {
     /// <inheritdoc />
     public async Task HandleAsync(BracketReadyEvent @event)
@@ -30,7 +24,7 @@ public sealed class BracketReadyEventHandler(
         // Start initial matches
         var matches = await db
             .Matches.Where(m => m.BracketId == bracket.Id)
-            .Where(m => m.IsReady)
+            .Where(m => m.LeftId != null && m.RightId != null && m.State == MatchState.Pending)
             .OrderBy(m => m.Round)
             .ThenBy(m => m.Index)
             .Take(bracket.MaxConcurrentMatches)
