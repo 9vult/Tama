@@ -5,7 +5,7 @@ using static Tama.Core.Features.Result;
 
 namespace Tama.Core.Features.Commands.BracketMessages.Create;
 
-public sealed class CreateBracketMessageCommandHandler(TamaDbContext db)
+public sealed class CreateBracketMessageHandler(TamaDbContext db)
     : ICommandHandler<CreateBracketMessageCommand, Result>
 {
     /// <inheritdoc />
