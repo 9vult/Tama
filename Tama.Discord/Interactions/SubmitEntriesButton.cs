@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Tama.Discord.Modals;
@@ -10,7 +11,7 @@ namespace Tama.Discord.Interactions;
 public sealed class SubmitEntriesButton(
     DiscordSocketClient client,
     ILogger<SubmitEntriesButton> logger
-) : InteractionModuleBase<SocketInteractionContext<SocketMessageComponent>>
+) : InteractionModuleBase<IInteractionContext>
 {
     [ComponentInteraction("tama.submit:*", ignoreGroupNames: true)]
     public async Task<RuntimeResult> HandleClickAsync(string rawId)

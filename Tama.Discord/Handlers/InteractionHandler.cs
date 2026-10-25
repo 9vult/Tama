@@ -87,9 +87,6 @@ public sealed class InteractionHandler(
             }
         );
 
-        // Auto-defer
-        await interaction.DeferAsync();
-
         var context = new SocketInteractionContext(client, interaction);
         await handler.ExecuteCommandAsync(context, provider);
     }

@@ -83,7 +83,7 @@ public sealed class CreateBracketSlashCommand(
         var result = await createBracketHandler.HandleAsync(command);
         if (result.IsSuccess)
         {
-            await interaction.FollowupAsync("Successfully created the bracket **{title}**!");
+            await interaction.FollowupAsync($"Successfully created the bracket **{title}**!");
             return ExecutionResult.Success;
         }
 

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Tama.Core.Features;
@@ -13,10 +14,10 @@ public sealed class ModalSubmitted(
     DiscordSocketClient client,
     SubmitEntriesHandler submitEntriesHandler,
     ILogger<ModalSubmitted> logger
-) : InteractionModuleBase<SocketInteractionContext<SocketMessageComponent>>
+) : InteractionModuleBase<IInteractionContext>
 {
     [ModalInteraction("tama.modal.submission:*")]
-    public async Task HandleModalSubmission(SubmissionModal modal, string rawId)
+    public async Task HandleModalSubmission(string rawId, SubmissionModal modal)
     {
         if (!BracketId.TryParse(rawId, out var bracketId))
         {

@@ -28,8 +28,8 @@ public sealed class BracketCreatedEventHandler(
 
         var description = new StringBuilder();
         description.AppendLine("Bracket Settings:");
-        description.AppendLine($"Entry limit: {bracket.EntryLimit}");
-        description.Append("Match duration: ");
+        description.AppendLine($"- Entry limit: {bracket.EntryLimit}");
+        description.Append("- Match duration: ");
         description.AppendLine(
             bracket.MatchDuration switch
             {
@@ -72,8 +72,6 @@ public sealed class BracketCreatedEventHandler(
                 )
             )
             .Build();
-
-        logger.LogInformation("");
 
         try
         {
