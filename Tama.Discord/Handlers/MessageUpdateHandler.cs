@@ -2,6 +2,7 @@
 
 using Discord;
 using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
 using Tama.Core.Events;
 using Tama.Core.Features.Queries.PollMessages.Get;
 using Tama.Domain.Enums;
@@ -11,8 +12,7 @@ namespace Tama.Discord.Handlers;
 
 public sealed class MessageUpdateHandler(
     DiscordSocketClient client,
-    IEventBus eventBus,
-    GetPollMessageHandler getPollHandler
+    IServiceScopeFactory scopeFactory
 )
 {
     public Task InitializeAsync()
@@ -34,11 +34,16 @@ public sealed class MessageUpdateHandler(
         if (message.Poll?.Results is not { IsFinalized: true } results)
             return;
 
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var getPollHandler = scope.ServiceProvider.GetRequiredService<GetPollMessageHandler>();
+
         var pollInfo = await getPollHandler.HandleAsync(
             new GetPollMessageQuery(MessageId.From(message.Id))
         );
         if (!pollInfo.IsSuccess)
             return;
+
+        var eventBus = scope.ServiceProvider.GetRequiredService<IEventBus>();
 
         var leftCount = results.AnswerCounts.FirstOrDefault(a => a.AnswerId == 1).Count;
         var rightCount = results.AnswerCounts.FirstOrDefault(a => a.AnswerId == 2).Count;
