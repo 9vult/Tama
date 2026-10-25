@@ -22,7 +22,7 @@ public sealed class AboutSlashCommand(VersionService versionService)
         await interaction.FollowupAsync(
             embed: new EmbedBuilder()
                 .WithAuthor(name: "Tama", url: "https://github.com/9vult/Tama")
-                .WithThumbnailUrl("https://files.catbox.moe/a7wowy.jpg")
+                .WithThumbnailUrl("https://i.imgur.com/6qi5ufC.jpeg")
                 .WithDescription(body.ToString())
                 .WithCurrentTimestamp()
                 .Build()
