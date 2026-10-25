@@ -83,7 +83,7 @@ public sealed class MatchEndedEventHandler(
                         ),
                         bracket.Title,
                         nextMatch.Title,
-                        bracket.DisplaySubmitters,
+                        bracket.IsAnonymous,
                         bracket.ChannelId,
                         bracket.MatchDuration
                     )

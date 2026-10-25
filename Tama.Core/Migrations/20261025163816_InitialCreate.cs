@@ -27,7 +27,7 @@ namespace Tama.Core.Migrations
                     AllowOpenings = table.Column<bool>(type: "INTEGER", nullable: false),
                     AllowEndings = table.Column<bool>(type: "INTEGER", nullable: false),
                     AllowInserts = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DisplaySubmitters = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsAnonymous = table.Column<bool>(type: "INTEGER", nullable: false),
                     State = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
                 },

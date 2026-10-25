@@ -45,15 +45,15 @@ namespace Tama.Core.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("DisplaySubmitters")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("EntryLimit")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("GroupId")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAnonymous")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("MatchDuration")
                         .HasColumnType("INTEGER");

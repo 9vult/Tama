@@ -56,9 +56,9 @@ public sealed class Bracket
     public required bool AllowInserts { get; init; }
 
     /// <summary>
-    /// Display the submitters for each match (does not apply to the winner)
+    /// Display the submitters for each match (Does not apply to champion announcements)
     /// </summary>
-    public required bool DisplaySubmitters { get; init; }
+    public required bool IsAnonymous { get; init; }
 
     /// <summary>
     /// Current state of the bracket

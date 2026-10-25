@@ -87,7 +87,7 @@ public sealed class MatchTiedEventHandler(
                         ),
                         bracket.Title,
                         nextMatch.Title,
-                        bracket.DisplaySubmitters,
+                        bracket.IsAnonymous,
                         bracket.ChannelId,
                         bracket.MatchDuration
                     )

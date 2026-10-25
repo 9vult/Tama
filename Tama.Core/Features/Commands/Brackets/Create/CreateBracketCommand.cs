@@ -17,5 +17,5 @@ public sealed record CreateBracketCommand(
     bool AllowOpenings,
     bool AllowEndings,
     bool AllowInserts,
-    bool DisplaySubmitters
+    bool IsAnonymous
 ) : ICommand;

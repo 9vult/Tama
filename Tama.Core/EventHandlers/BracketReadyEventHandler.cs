@@ -58,7 +58,7 @@ public sealed class BracketReadyEventHandler(
                     ),
                     bracket.Title,
                     match.Title,
-                    bracket.DisplaySubmitters,
+                    bracket.IsAnonymous,
                     bracket.ChannelId,
                     bracket.MatchDuration
                 )

@@ -9,7 +9,7 @@
 # Database
 *.db
 *.db-*
-
+bin\\Debug
 
 # User-specific files
 *.rsuser
