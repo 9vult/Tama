@@ -41,6 +41,12 @@ public sealed class CreateBracketSlashCommand(
             return ExecutionResult.Success;
         }
 
+        if (!allowOpenings && !allowEndings)
+        {
+            await interaction.FollowupAsync("You can't disallow openings *and* endings!");
+            return ExecutionResult.Success;
+        }
+
         // Check bot permissions on the specified channel
         if (channel is not SocketTextChannel guildChannel)
         {
