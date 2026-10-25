@@ -19,7 +19,7 @@ public sealed class DiscordBotHostedService(
     /// <inheritdoc />
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("Starting Nino Discord Bot...");
+        logger.LogInformation("Starting Tama Discord Bot...");
         client.Ready += OnReady;
         client.Log += OnLog;
 
