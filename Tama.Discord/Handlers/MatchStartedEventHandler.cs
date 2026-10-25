@@ -29,7 +29,7 @@ public sealed class MatchStartedEventHandler(
         description.AppendLine($"**{@event.BracketTitle}** - {@event.MatchTitle}");
         description.AppendLine();
 
-        if (@event.DisplaySubmitters)
+        if (!@event.IsAnonymous)
             description.AppendLine(
                 $"<@{@event.Left.SubmitterId}> vs <@{@event.Right.SubmitterId}>"
             );

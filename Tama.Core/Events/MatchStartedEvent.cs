@@ -12,7 +12,7 @@ public sealed record MatchStartedEvent(
     EntryDto Right,
     string BracketTitle,
     string MatchTitle,
-    bool DisplaySubmitters,
+    bool IsAnonymous,
     ChannelId ChannelId,
     MatchDuration MatchDuration
 ) : IEvent;
