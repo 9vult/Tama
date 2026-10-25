@@ -4,10 +4,10 @@ using Tama.Domain.ValueObjects;
 
 namespace Tama.Domain.Entities;
 
-public sealed class Poll
+public sealed class BracketMessage
 {
     public int Id { get; set; }
     public required MessageId MessageId { get; init; }
-    public required MatchId MatchId { get; init; }
-    public Match Match { get; set; } = null!;
+    public required BracketId BracketId { get; init; }
+    public Bracket Bracket { get; set; } = null!;
 }

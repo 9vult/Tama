@@ -37,6 +37,26 @@ namespace Tama.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BracketMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MessageId = table.Column<string>(type: "TEXT", nullable: false),
+                    BracketId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BracketMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BracketMessages_Brackets_BracketId",
+                        column: x => x.BracketId,
+                        principalTable: "Brackets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Entries",
                 columns: table => new
                 {
@@ -112,7 +132,7 @@ namespace Tama.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Polls",
+                name: "PollMessages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -122,14 +142,25 @@ namespace Tama.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Polls", x => x.Id);
+                    table.PrimaryKey("PK_PollMessages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Polls_Matches_MatchId",
+                        name: "FK_PollMessages_Matches_MatchId",
                         column: x => x.MatchId,
                         principalTable: "Matches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BracketMessages_BracketId",
+                table: "BracketMessages",
+                column: "BracketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BracketMessages_MessageId_BracketId",
+                table: "BracketMessages",
+                columns: new[] { "MessageId", "BracketId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Entries_BracketId",
@@ -163,13 +194,13 @@ namespace Tama.Core.Migrations
                 column: "WinnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Polls_MatchId",
-                table: "Polls",
+                name: "IX_PollMessages_MatchId",
+                table: "PollMessages",
                 column: "MatchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Polls_MessageId_MatchId",
-                table: "Polls",
+                name: "IX_PollMessages_MessageId_MatchId",
+                table: "PollMessages",
                 columns: new[] { "MessageId", "MatchId" },
                 unique: true);
         }
@@ -178,7 +209,10 @@ namespace Tama.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Polls");
+                name: "BracketMessages");
+
+            migrationBuilder.DropTable(
+                name: "PollMessages");
 
             migrationBuilder.DropTable(
                 name: "Matches");

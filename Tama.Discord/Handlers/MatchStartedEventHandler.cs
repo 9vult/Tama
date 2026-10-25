@@ -4,7 +4,7 @@ using System.Text;
 using Discord;
 using Discord.WebSocket;
 using Tama.Core.Events;
-using Tama.Core.Features.Commands.Polls.Create;
+using Tama.Core.Features.Commands.PollMessages.Create;
 using Tama.Domain.Enums;
 using Tama.Domain.ValueObjects;
 
@@ -12,7 +12,7 @@ namespace Tama.Discord.Handlers;
 
 public sealed class MatchStartedEventHandler(
     DiscordSocketClient client,
-    CreatePollHandler createPollHandler,
+    CreatePollMessageHandler createPollHandler,
     ILogger<MatchStartedEventHandler> logger
 ) : IEventHandler<MatchStartedEvent>
 {
@@ -77,7 +77,7 @@ public sealed class MatchStartedEventHandler(
             // Poll
             var pollMessage = await channel.SendMessageAsync(poll: poll);
             await createPollHandler.HandleAsync(
-                new CreatePollCommand(@event.MatchId, MessageId.From(pollMessage.Id))
+                new CreatePollMessageCommand(@event.MatchId, MessageId.From(pollMessage.Id))
             );
 
             // Open thread

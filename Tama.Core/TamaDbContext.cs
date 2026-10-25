@@ -14,15 +14,11 @@ namespace Tama.Core;
 
 public class TamaDbContext(DbContextOptions<TamaDbContext> options) : DbContext(options)
 {
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
-    {
-        Converters = { new JsonStringEnumConverter() },
-    };
-
     public DbSet<Bracket> Brackets { get; init; } = null!;
     public DbSet<Match> Matches { get; init; } = null!;
     public DbSet<Entry> Entries { get; set; } = null!;
-    public DbSet<Poll> Polls { get; set; } = null!;
+    public DbSet<PollMessage> PollMessages { get; set; } = null!;
+    public DbSet<BracketMessage> BracketMessages { get; set; } = null!;
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder builder)

@@ -74,6 +74,29 @@ namespace Tama.Core.Migrations
                     b.ToTable("Brackets");
                 });
 
+            modelBuilder.Entity("Tama.Domain.Entities.BracketMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("BracketId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BracketId");
+
+                    b.HasIndex("MessageId", "BracketId")
+                        .IsUnique();
+
+                    b.ToTable("BracketMessages");
+                });
+
             modelBuilder.Entity("Tama.Domain.Entities.Entry", b =>
                 {
                     b.Property<Guid>("Id")
@@ -172,7 +195,7 @@ namespace Tama.Core.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("Tama.Domain.Entities.Poll", b =>
+            modelBuilder.Entity("Tama.Domain.Entities.PollMessage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +215,18 @@ namespace Tama.Core.Migrations
                     b.HasIndex("MessageId", "MatchId")
                         .IsUnique();
 
-                    b.ToTable("Polls");
+                    b.ToTable("PollMessages");
+                });
+
+            modelBuilder.Entity("Tama.Domain.Entities.BracketMessage", b =>
+                {
+                    b.HasOne("Tama.Domain.Entities.Bracket", "Bracket")
+                        .WithMany()
+                        .HasForeignKey("BracketId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bracket");
                 });
 
             modelBuilder.Entity("Tama.Domain.Entities.Entry", b =>
@@ -245,7 +279,7 @@ namespace Tama.Core.Migrations
                     b.Navigation("Winner");
                 });
 
-            modelBuilder.Entity("Tama.Domain.Entities.Poll", b =>
+            modelBuilder.Entity("Tama.Domain.Entities.PollMessage", b =>
                 {
                     b.HasOne("Tama.Domain.Entities.Match", "Match")
                         .WithMany()

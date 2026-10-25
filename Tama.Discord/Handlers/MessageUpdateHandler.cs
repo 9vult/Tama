@@ -3,7 +3,7 @@
 using Discord;
 using Discord.WebSocket;
 using Tama.Core.Events;
-using Tama.Core.Features.Queries.Polls.Get;
+using Tama.Core.Features.Queries.PollMessages.Get;
 using Tama.Domain.Enums;
 using Tama.Domain.ValueObjects;
 
@@ -12,7 +12,7 @@ namespace Tama.Discord.Handlers;
 public sealed class MessageUpdateHandler(
     DiscordSocketClient client,
     IEventBus eventBus,
-    GetPollHandler getPollHandler
+    GetPollMessageHandler getPollHandler
 )
 {
     public Task InitializeAsync()
@@ -35,7 +35,7 @@ public sealed class MessageUpdateHandler(
             return;
 
         var pollInfo = await getPollHandler.HandleAsync(
-            new GetPollQuery(MessageId.From(message.Id))
+            new GetPollMessageQuery(MessageId.From(message.Id))
         );
         if (!pollInfo.IsSuccess)
             return;

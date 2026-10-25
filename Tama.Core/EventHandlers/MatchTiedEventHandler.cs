@@ -44,7 +44,7 @@ public sealed class MatchTiedEventHandler(
             match.State = MatchState.AwaitingTiebreak;
 
             // Request tiebreak
-            var pollInfo = await db.Polls.FirstOrDefaultAsync(p => p.MatchId == match.Id);
+            var pollInfo = await db.PollMessages.FirstOrDefaultAsync(p => p.MatchId == match.Id);
             await eventBus.PublishAsync(
                 new TiebreakRequestedEvent(
                     match.Id,

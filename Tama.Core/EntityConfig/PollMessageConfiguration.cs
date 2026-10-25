@@ -6,10 +6,10 @@ using Tama.Domain.Entities;
 
 namespace Tama.Core.EntityConfig;
 
-public sealed class PollConfiguration : IEntityTypeConfiguration<Poll>
+public sealed class PollMessageConfiguration : IEntityTypeConfiguration<PollMessage>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Poll> poll)
+    public void Configure(EntityTypeBuilder<PollMessage> poll)
     {
         poll.HasIndex(p => new { p.MessageId, p.MatchId }).IsUnique();
         poll.HasOne(p => p.Match)
