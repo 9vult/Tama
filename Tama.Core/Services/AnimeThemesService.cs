@@ -36,6 +36,20 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
     }
 
     /// <inheritdoc />
+    public bool ValidateType(Uri url, bool allowOpenings, bool allowEndings, bool allowInserts)
+    {
+        var type = GetThemeType(url);
+        if (!allowOpenings && type is ThemeType.Opening)
+            return false;
+        if (!allowEndings && type is ThemeType.Ending)
+            return false;
+        if (!allowInserts && type is ThemeType.Insert)
+            return false;
+
+        return type is not ThemeType.Unknown;
+    }
+
+    /// <inheritdoc />
     public ThemeType GetThemeType(Uri url)
     {
         if (url.Segments[3].StartsWith("OP"))

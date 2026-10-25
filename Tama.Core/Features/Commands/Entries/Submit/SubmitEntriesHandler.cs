@@ -41,16 +41,39 @@ public sealed class SubmitEntriesHandler(
                 command.SubmitterId,
                 bracket.Id
             );
-            Fail(ResultStatus.AlreadySubmitted);
+            return Fail(ResultStatus.AlreadySubmitted);
         }
 
-        // Ensure all submissions are valid
-        if (!atService.ValidateUrl(command.FirstSubmission))
-            return Fail(ResultStatus.BadRequest, "1");
-        if (!atService.ValidateUrl(command.SecondSubmission))
-            return Fail(ResultStatus.BadRequest, "2");
-        if (!atService.ValidateUrl(command.ThirdSubmission))
-            return Fail(ResultStatus.BadRequest, "3");
+        // Ensure all submissions are valid AT URLs
+        if (
+            !atService.ValidateUrl(command.FirstSubmission)
+            || !atService.ValidateUrl(command.SecondSubmission)
+            || !atService.ValidateUrl(command.ThirdSubmission)
+        )
+            return Fail(ResultStatus.BadRequest, "URL");
+
+        // Ensure all submissions are of allowed types
+        if (
+            !atService.ValidateType(
+                command.FirstSubmission,
+                bracket.AllowOpenings,
+                bracket.AllowEndings,
+                bracket.AllowInserts
+            )
+            || !atService.ValidateType(
+                command.SecondSubmission,
+                bracket.AllowOpenings,
+                bracket.AllowEndings,
+                bracket.AllowInserts
+            )
+            || !atService.ValidateType(
+                command.ThirdSubmission,
+                bracket.AllowOpenings,
+                bracket.AllowEndings,
+                bracket.AllowInserts
+            )
+        )
+            return Fail(ResultStatus.BadRequest, "TYPE");
 
         // Find the first submission that hasn't been submitted yet
         Uri submission;
@@ -65,6 +88,9 @@ public sealed class SubmitEntriesHandler(
             return Fail(ResultStatus.EntryConflict);
 
         var animeDetails = await atService.GetAnimeDetailsAsync(submission);
+
+        if (animeDetails.Title == string.Empty)
+            return Fail(ResultStatus.Error);
 
         var entry = new Entry
         {

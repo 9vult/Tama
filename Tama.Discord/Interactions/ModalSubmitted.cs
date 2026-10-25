@@ -57,8 +57,11 @@ public sealed class ModalSubmitted(
         await interaction.FollowupAsync(
             response.Status switch
             {
+                ResultStatus.Error => "An AnimeThemes error occured. Please try again later.",
                 ResultStatus.NoBracket => "That bracket does not exist",
-                ResultStatus.BadRequest when response.Message is "1" or "2" or "3" =>
+                ResultStatus.BadRequest when response.Message is "TYPE" =>
+                    "One or more of your submissions was a disallowed theme type. Please try agin.",
+                ResultStatus.BadRequest when response.Message is "URL" =>
                     "One or more of your submissions was an invalid AnimeThemes.moe video page URL. Please try again.",
                 ResultStatus.BadRequest => "That bracket is already in-progress",
                 ResultStatus.EntryConflict =>

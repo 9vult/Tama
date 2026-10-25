@@ -17,6 +17,16 @@ public interface IAnimeThemesService
     bool ValidateUrl(Uri url);
 
     /// <summary>
+    /// Validate that the given <paramref name="url"/> is for a valid theme type
+    /// </summary>
+    /// <param name="url">Url to check</param>
+    /// <param name="allowOpenings">If openings are allowed</param>
+    /// <param name="allowEndings">If endings are allowed</param>
+    /// <param name="allowInserts">If inserts are allowed</param>
+    /// <returns></returns>
+    bool ValidateType(Uri url, bool allowOpenings, bool allowEndings, bool allowInserts);
+
+    /// <summary>
     /// Get the type of theme at the <paramref name="url"/>
     /// </summary>
     /// <remarks>Assumes <paramref name="url"/> is valid</remarks>
