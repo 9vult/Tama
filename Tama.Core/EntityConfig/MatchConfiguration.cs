@@ -34,12 +34,17 @@ public sealed class MatchConfiguration : IEntityTypeConfiguration<Match>
             .WithMany()
             .HasForeignKey(m => m.WinnerId)
             .OnDelete(DeleteBehavior.Restrict);
+        match
+            .HasOne(m => m.Next)
+            .WithMany()
+            .HasForeignKey(m => m.NextId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        match.Ignore(m => m.Next);
         match.Ignore(m => m.SeedsLeftOfNext);
 
         match.Navigation(m => m.Left).AutoInclude();
         match.Navigation(m => m.Right).AutoInclude();
         match.Navigation(m => m.Winner).AutoInclude();
+        match.Navigation(m => m.Next).AutoInclude();
     }
 }

@@ -37,7 +37,6 @@ public sealed class EntrySubmittedEventHandler(
         new Random().Shuffle(shuffledEntries);
 
         bracket.Matches = BuildEmptyMatchTree(bracket.Id, bracket.EntryLimit);
-        bracket.LinkMatches();
 
         var round0 = bracket.Matches.Where(m => m.Round == 0).OrderBy(m => m.Index).ToList();
         for (var i = 0; i < round0.Count; i++)
@@ -86,6 +85,14 @@ public sealed class EntrySubmittedEventHandler(
                     }
                 );
             }
+        }
+
+        // Set up Next linking
+        var byPos = matches.ToDictionary(m => (m.Round, m.Index));
+        foreach (var m in matches)
+        {
+            if (byPos.TryGetValue((m.Round + 1, m.Index / 2), out var next))
+                m.Next = next;
         }
 
         return matches;

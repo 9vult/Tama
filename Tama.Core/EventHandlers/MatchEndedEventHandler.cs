@@ -24,8 +24,6 @@ public sealed class MatchEndedEventHandler(
         if (bracket is null)
             return;
 
-        bracket.LinkMatches();
-
         var match = bracket.Matches.First(m => m.Id == @event.MatchId);
         if (match.State is not MatchState.Active)
             return;

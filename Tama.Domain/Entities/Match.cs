@@ -42,7 +42,7 @@ public sealed class Match
     /// <summary>
     /// If this match seeds the <see cref="Left"/> side of <see cref="Next"/>
     /// </summary>
-    public bool SeedsLeftOfNext { get; set; }
+    public bool SeedsLeftOfNext => Index % 2 == 0;
 
     /// <summary>
     /// <see langword="true"/> if this is the final match

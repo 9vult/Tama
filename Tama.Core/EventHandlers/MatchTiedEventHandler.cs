@@ -24,8 +24,6 @@ public sealed class MatchTiedEventHandler(
         if (bracket is null)
             return;
 
-        bracket.LinkMatches();
-
         var match = bracket.Matches.First(m => m.Id == @event.MatchId);
         if (match.State is not MatchState.Active)
             return;
@@ -41,9 +39,34 @@ public sealed class MatchTiedEventHandler(
         }
         else
         {
-            logger.LogInformation("Awaiting tiebreak for match {MatchId}", match.Id);
+            logger.LogInformation("Requesting tiebreak for match {MatchId}", match.Id);
             match.State = MatchState.AwaitingTiebreak;
 
+            // Request tiebreak
+            await eventBus.PublishAsync(
+                new TiebreakRequestedEvent(
+                    match.Id,
+                    new EntryDto(
+                        match.Left!.Id,
+                        match.Left.SubmitterId,
+                        match.Left.Title,
+                        match.Left.ImageUrl,
+                        match.Left.SubmissionUrl
+                    ),
+                    new EntryDto(
+                        match.Right!.Id,
+                        match.Right.SubmitterId,
+                        match.Right.Title,
+                        match.Right.ImageUrl,
+                        match.Right.SubmissionUrl
+                    ),
+                    bracket.Title,
+                    match.Title,
+                    bracket.ChannelId
+                )
+            );
+
+            // Check if any matches can start
             var freeMatchSlots =
                 bracket.MaxConcurrentMatches
                 - bracket.Matches.Count(m => m.State is MatchState.Active);
