@@ -36,6 +36,8 @@ public static class DiscordBotServiceCollectionExtensions
 
         // EventHandlers
         services.AddScoped<IEventHandler<MatchStartedEvent>, MatchStartedEventHandler>();
+        services.AddScoped<IEventHandler<BracketReadyEvent>, BracketReadyEventHandler>();
+        services.AddScoped<IEventHandler<BracketCreatedEvent>, BracketCreatedEventHandler>();
         services.AddScoped<IEventHandler<TiebreakRequestedEvent>, TiebreakRequestedEventHandler>();
 
         services.AddHostedService<DiscordBotHostedService>();

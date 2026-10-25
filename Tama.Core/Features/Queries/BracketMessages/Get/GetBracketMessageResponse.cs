@@ -4,4 +4,8 @@ using Tama.Domain.ValueObjects;
 
 namespace Tama.Core.Features.Queries.BracketMessages.Get;
 
-public sealed record GetBracketMessageResponse(MessageId MessageId, BracketId BracketId);
+public sealed record GetBracketMessageResponse(
+    MessageId MessageId,
+    ChannelId ChannelId,
+    BracketId BracketId
+);

@@ -11,12 +11,23 @@ public sealed class GetBracketMessageHandler(ReadOnlyTamaDbContext db)
     /// <inheritdoc />
     public async Task<Result<GetBracketMessageResponse>> HandleAsync(GetBracketMessageQuery query)
     {
-        var poll = await db.BracketMessages.FirstOrDefaultAsync(p =>
-            p.MessageId == query.MessageId
+        var bracketMsg = await db.BracketMessages.FirstOrDefaultAsync(p =>
+            p.BracketId == query.BracketId
         );
 
-        return poll is not null
-            ? Success(new GetBracketMessageResponse(poll.MessageId, poll.BracketId))
+        if (bracketMsg is null)
+            return Fail(ResultStatus.Error);
+
+        var channelId = (await db.Brackets.FindAsync(bracketMsg.BracketId))?.ChannelId;
+
+        return channelId is not null
+            ? Success(
+                new GetBracketMessageResponse(
+                    bracketMsg.MessageId,
+                    channelId.Value,
+                    bracketMsg.BracketId
+                )
+            )
             : Fail(ResultStatus.Error);
     }
 }

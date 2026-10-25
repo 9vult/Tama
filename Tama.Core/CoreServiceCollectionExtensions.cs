@@ -49,11 +49,11 @@ public static class CoreServiceCollectionExtensions
         services.AddScoped<IAnimeThemesService, AnimeThemesService>();
 
         // EventHandlers
+        services.AddScoped<IEventHandler<TiebreakSubmittedEvent>, TiebreakSubmittedEventHandler>();
         services.AddScoped<IEventHandler<EntrySubmittedEvent>, EntrySubmittedEventHandler>();
         services.AddScoped<IEventHandler<BracketReadyEvent>, BracketReadyEventHandler>();
         services.AddScoped<IEventHandler<MatchEndedEvent>, MatchEndedEventHandler>();
         services.AddScoped<IEventHandler<MatchTiedEvent>, MatchTiedEventHandler>();
-        services.AddScoped<IEventHandler<TiebreakSubmittedEvent>, TiebreakSubmittedEventHandler>();
 
         return services;
 
