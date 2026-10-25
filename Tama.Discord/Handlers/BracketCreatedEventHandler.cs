@@ -53,7 +53,8 @@ public sealed class BracketCreatedEventHandler(
                 ? ":disguised_face: Matches are anonymous"
                 : ":star_struck: Matches are not anonymous"
         );
-        description.AppendLine("*Overall winner is not anonymous*");
+        if (bracket.IsAnonymous)
+            description.AppendLine("*(Overall winner is not anonymous)*");
 
         var embed = new EmbedBuilder()
             .WithTitle(bracket.Title)
