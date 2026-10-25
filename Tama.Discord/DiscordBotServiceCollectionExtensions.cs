@@ -36,6 +36,7 @@ public static class DiscordBotServiceCollectionExtensions
 
         // EventHandlers
         services.AddScoped<IEventHandler<MatchStartedEvent>, MatchStartedEventHandler>();
+        services.AddScoped<IEventHandler<TiebreakRequestedEvent>, TiebreakRequestedEventHandler>();
 
         services.AddHostedService<DiscordBotHostedService>();
         return services;

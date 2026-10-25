@@ -59,8 +59,8 @@ public sealed class MatchStartedEventHandler(
             },
             Answers =
             [
-                new PollMediaProperties { Text = @event.Left.Title },
-                new PollMediaProperties { Text = @event.Right.Title },
+                new PollMediaProperties { Text = @event.Left.Title, Emoji = Emoji.Parse(":one:") },
+                new PollMediaProperties { Text = @event.Right.Title, Emoji = Emoji.Parse(":two:") },
             ],
             AllowMultiselect = false,
             LayoutType = PollLayout.Default,

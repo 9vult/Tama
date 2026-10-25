@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Tama.Core.Dtos;
 using Tama.Core.Events;
 using Tama.Domain.Enums;
+using Tama.Domain.ValueObjects;
 
 namespace Tama.Core.EventHandlers;
 
@@ -43,26 +44,12 @@ public sealed class MatchTiedEventHandler(
             match.State = MatchState.AwaitingTiebreak;
 
             // Request tiebreak
+            var pollInfo = await db.Polls.FirstOrDefaultAsync(p => p.MatchId == match.Id);
             await eventBus.PublishAsync(
                 new TiebreakRequestedEvent(
                     match.Id,
-                    new EntryDto(
-                        match.Left!.Id,
-                        match.Left.SubmitterId,
-                        match.Left.Title,
-                        match.Left.ImageUrl,
-                        match.Left.SubmissionUrl
-                    ),
-                    new EntryDto(
-                        match.Right!.Id,
-                        match.Right.SubmitterId,
-                        match.Right.Title,
-                        match.Right.ImageUrl,
-                        match.Right.SubmissionUrl
-                    ),
-                    bracket.Title,
-                    match.Title,
-                    bracket.ChannelId
+                    bracket.ChannelId,
+                    pollInfo?.MessageId ?? MessageId.From(0)
                 )
             );
 
