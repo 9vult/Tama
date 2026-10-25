@@ -21,6 +21,7 @@ public sealed class InteractionHandler(
         client.Ready += OnClientReadyAsync;
         client.SlashCommandExecuted += OnSlashCommandInteraction;
         client.ButtonExecuted += OnButtonClickedInteraction;
+        client.ModalSubmitted += OnModalSubmittedInteraction;
         client.AutocompleteExecuted += OnAutocompleteInteraction;
 
         handler.InteractionExecuted += OnInteractionExecuted;
@@ -83,6 +84,32 @@ public sealed class InteractionHandler(
                 ["CorrelationId"] = Guid.NewGuid(),
                 ["InteractionType"] = "SlashCommand",
                 ["CommandName"] = buttonName,
+            }
+        );
+
+        // Auto-defer
+        await interaction.DeferAsync();
+
+        var context = new SocketInteractionContext(client, interaction);
+        await handler.ExecuteCommandAsync(context, provider);
+    }
+
+    private async Task OnModalSubmittedInteraction(SocketModal interaction)
+    {
+        if (interaction.GuildId is null)
+        {
+            await interaction.RespondAsync("Tama commands must be run in a server!");
+            return;
+        }
+
+        var modalName = interaction.Data.CustomId[..interaction.Data.CustomId.IndexOf(':')];
+
+        using var scope = logger.BeginScope(
+            new Dictionary<string, object>
+            {
+                ["CorrelationId"] = Guid.NewGuid(),
+                ["InteractionType"] = "Modal",
+                ["CommandName"] = modalName,
             }
         );
 

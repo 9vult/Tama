@@ -31,7 +31,9 @@ public sealed class SubmitEntriesButton(
             member.Id
         );
 
-        await interaction.RespondWithModalAsync<SubmissionModal>("tama.modal.submission");
+        await interaction.RespondWithModalAsync<SubmissionModal>(
+            $"tama.modal.submission:{bracketId}"
+        );
         return ExecutionResult.Success;
     }
 }

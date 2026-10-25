@@ -10,11 +10,11 @@ using static Tama.Core.Features.Result;
 
 namespace Tama.Core.Features.Commands.Entries.Submit;
 
-public sealed class SubmitEntriesCommandHandler(
+public sealed class SubmitEntriesHandler(
     TamaDbContext db,
     IEventBus eventBus,
     IAnimeThemesService atService,
-    ILogger<SubmitEntriesCommandHandler> logger
+    ILogger<SubmitEntriesHandler> logger
 ) : ICommandHandler<SubmitEntriesCommand, Result>
 {
     /// <inheritdoc />

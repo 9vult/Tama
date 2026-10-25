@@ -1,0 +1,71 @@
+// SPDX-License-Identifier: MPL-2.0
+
+using Discord.Interactions;
+using Discord.WebSocket;
+using Tama.Core.Features;
+using Tama.Core.Features.Commands.Entries.Submit;
+using Tama.Discord.Modals;
+using Tama.Domain.ValueObjects;
+
+namespace Tama.Discord.Interactions;
+
+public sealed class ModalSubmitted(
+    DiscordSocketClient client,
+    SubmitEntriesHandler submitEntriesHandler,
+    ILogger<ModalSubmitted> logger
+) : InteractionModuleBase<SocketInteractionContext<SocketMessageComponent>>
+{
+    [ModalInteraction("tama.modal.submission:*")]
+    public async Task HandleModalSubmission(SubmissionModal modal, string rawId)
+    {
+        if (!BracketId.TryParse(rawId, out var bracketId))
+        {
+            logger.LogError("Could not parse bracket id: {BracketId}", rawId);
+            return;
+        }
+
+        var interaction = Context.Interaction;
+        var guild = client.GetGuild(interaction.GuildId!.Value);
+        var member = guild.GetUser(interaction.User.Id);
+
+        if (
+            !Uri.TryCreate(modal.FirstChoice, UriKind.Absolute, out var first)
+            || !Uri.TryCreate(modal.SecondChoice, UriKind.Absolute, out var second)
+            || !Uri.TryCreate(modal.ThirdChoice, UriKind.Absolute, out var third)
+        )
+        {
+            await interaction.FollowupAsync(
+                "One or more of your submissions was an invalid URL. Please try again.",
+                ephemeral: true
+            );
+            return;
+        }
+
+        var command = new SubmitEntriesCommand(
+            bracketId,
+            UserId.From(member.Id),
+            first,
+            second,
+            third
+        );
+
+        var response = await submitEntriesHandler.HandleAsync(command);
+        if (response.IsSuccess)
+            return;
+
+        await interaction.FollowupAsync(
+            response.Status switch
+            {
+                ResultStatus.NoBracket => "That bracket does not exist",
+                ResultStatus.BadRequest when response.Message is "1" or "2" or "3" =>
+                    "One or more of your submissions was an invalid AnimeThemes.moe video page URL. Please try again.",
+                ResultStatus.BadRequest => "That bracket is already in-progress",
+                ResultStatus.EntryConflict =>
+                    "All of your submissions already exist in the bracket. Please try again.",
+                ResultStatus.AlreadySubmitted => "You have already submitted to this bracket!",
+                _ => "An error occured while processing your submission",
+            },
+            ephemeral: true
+        );
+    }
+}
