@@ -52,7 +52,10 @@ public sealed class ModalSubmitted(
 
         var response = await submitEntriesHandler.HandleAsync(command);
         if (response.IsSuccess)
+        {
+            await interaction.FollowupAsync("Your response has been recorded.", ephemeral: true);
             return;
+        }
 
         await interaction.FollowupAsync(
             response.Status switch
