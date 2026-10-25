@@ -35,7 +35,14 @@ public sealed class MatchEndedEventHandler(
         {
             logger.LogInformation("Champion picked for bracket {BracketId}", bracket.Id);
             bracket.State = MatchState.Complete;
-            await eventBus.PublishAsync(new AnnounceChampionEvent([match.WinnerId!.Value]));
+            await eventBus.PublishAsync(
+                new AnnounceChampionEvent(
+                    bracket.Id,
+                    bracket.Title,
+                    bracket.ChannelId,
+                    [EntryDto.FromEntry(match.Winner!)]
+                )
+            );
         }
         else
         {

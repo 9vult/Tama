@@ -35,7 +35,12 @@ public sealed class MatchTiedEventHandler(
             match.State = MatchState.Complete;
             bracket.State = MatchState.Complete;
             await eventBus.PublishAsync(
-                new AnnounceChampionEvent([match.LeftId!.Value, match.RightId!.Value])
+                new AnnounceChampionEvent(
+                    bracket.Id,
+                    bracket.Title,
+                    bracket.ChannelId,
+                    [EntryDto.FromEntry(match.Left!), EntryDto.FromEntry(match.Right!)]
+                )
             );
         }
         else
