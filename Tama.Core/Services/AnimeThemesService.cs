@@ -66,6 +66,11 @@ public class AnimeThemesService(HttpClient client, ILogger<AnimeThemesService> l
     /// <inheritdoc />
     public async Task<AnimeDto> GetAnimeDetailsAsync(Uri url)
     {
+        if (client.DefaultRequestHeaders.UserAgent.Count == 0)
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(
+                "Mozilla/5.0 (compatible; TamaBot/1.0)"
+            );
+
         var response = await client.PostAsync(BaseUrl, CreateQuery(GetAnimeSlug(url)));
         if (!response.IsSuccessStatusCode)
         {
