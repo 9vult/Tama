@@ -30,8 +30,8 @@ public sealed class TiebreakRequestedEventHandler(
             return;
         }
 
-        var leftId = $"tama:tiebreak:{@event.MatchId}:left";
-        var rightId = $"tama:tiebreak:{@event.MatchId}:right";
+        var leftId = $"tama.tiebreak.left:{@event.MatchId}";
+        var rightId = $"tama.tiebreak.right:{@event.MatchId}";
 
         var component = new ComponentBuilderV2()
             .WithActionRow(builder =>
