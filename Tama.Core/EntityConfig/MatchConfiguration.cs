@@ -37,5 +37,9 @@ public sealed class MatchConfiguration : IEntityTypeConfiguration<Match>
 
         match.Ignore(m => m.Next);
         match.Ignore(m => m.SeedsLeftOfNext);
+
+        match.Navigation(m => m.Left).AutoInclude();
+        match.Navigation(m => m.Right).AutoInclude();
+        match.Navigation(m => m.Winner).AutoInclude();
     }
 }

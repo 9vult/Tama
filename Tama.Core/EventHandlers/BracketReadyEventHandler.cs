@@ -30,8 +30,7 @@ public sealed class BracketReadyEventHandler(
         // Start initial matches
         var matches = await db
             .Matches.Where(m => m.BracketId == bracket.Id)
-            .Where(m => m.Left != null && m.Right != null)
-            .Where(m => m.State == MatchState.Pending)
+            .Where(m => m.IsReady)
             .OrderBy(m => m.Round)
             .ThenBy(m => m.Index)
             .Take(bracket.MaxConcurrentMatches)
