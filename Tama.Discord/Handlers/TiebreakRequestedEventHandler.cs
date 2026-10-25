@@ -20,16 +20,6 @@ public sealed class TiebreakRequestedEventHandler(
             return;
         }
 
-        if (await channel.GetMessageAsync(@event.MessageId.Value) is not IUserMessage message)
-        {
-            logger.LogError(
-                "Discord message {MessageId} was not found in channel {ChannelId}",
-                @event.MessageId,
-                @event.ChannelId
-            );
-            return;
-        }
-
         var leftId = $"tama.tiebreak.left:{@event.MatchId}";
         var rightId = $"tama.tiebreak.right:{@event.MatchId}";
 
@@ -49,9 +39,20 @@ public sealed class TiebreakRequestedEventHandler(
             )
             .Build();
 
-        await message.ModifyAsync(msg =>
-        {
-            msg.Components = component;
-        });
+        var embed = new EmbedBuilder()
+            .WithTitle(@event.BracketTitle)
+            .WithDescription(
+                $"""
+                **Tiebreak!**
+                {@event.MatchTitle}
+
+                Which should win?
+                :one: {@event.Left.Title}
+                :two: {@event.Right.Title}
+                """
+            )
+            .Build();
+
+        await channel.SendMessageAsync(embed: embed, components: component);
     }
 }

@@ -29,7 +29,7 @@ public sealed class MatchTiedEventHandler(
         if (match.State is not MatchState.Active)
             return;
 
-        if (match.Next is null && bracket.AllowTie) // Final, co-champions
+        if (match.NextId is null && bracket.AllowTie) // Final, co-champions
         {
             logger.LogInformation("Co-champions picked for bracket {BracketId}", bracket.Id);
             match.State = MatchState.Complete;
@@ -49,12 +49,14 @@ public sealed class MatchTiedEventHandler(
             match.State = MatchState.AwaitingTiebreak;
 
             // Request tiebreak
-            var pollInfo = await db.PollMessages.FirstOrDefaultAsync(p => p.MatchId == match.Id);
             await eventBus.PublishAsync(
                 new TiebreakRequestedEvent(
                     match.Id,
-                    bracket.ChannelId,
-                    pollInfo?.MessageId ?? MessageId.From(0)
+                    EntryDto.FromEntry(match.Left!),
+                    EntryDto.FromEntry(match.Right!),
+                    match.Title,
+                    bracket.Title,
+                    bracket.ChannelId
                 )
             );
 
