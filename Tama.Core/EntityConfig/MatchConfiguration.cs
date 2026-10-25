@@ -45,6 +45,5 @@ public sealed class MatchConfiguration : IEntityTypeConfiguration<Match>
         match.Navigation(m => m.Left).AutoInclude();
         match.Navigation(m => m.Right).AutoInclude();
         match.Navigation(m => m.Winner).AutoInclude();
-        match.Navigation(m => m.Next).AutoInclude();
     }
 }

@@ -31,7 +31,7 @@ public sealed class TiebreakSubmittedEventHandler(
         match.State = MatchState.Complete;
         match.WinnerId = @event.Result is PollResult.Left ? match.LeftId : match.RightId;
 
-        if (match.Next is null) // Final
+        if (match.NextId is null) // Final
         {
             logger.LogInformation(
                 "Champion picked for bracket {BracketId} through tiebreak",
@@ -52,13 +52,17 @@ public sealed class TiebreakSubmittedEventHandler(
             logger.LogInformation(
                 "Seeding winner of match {MatchId} into {NextMatchId} through tiebreak",
                 match.Id,
-                match.Next.Id
+                match.NextId
             );
 
+            var next = await db.Matches.FindAsync(match.NextId);
+            if (next is null)
+                throw new ArgumentException($"Match with id {match.NextId} not found");
+
             if (match.SeedsLeftOfNext)
-                match.Next.LeftId = match.WinnerId;
+                next.LeftId = match.WinnerId;
             else
-                match.Next.RightId = match.WinnerId;
+                next.RightId = match.WinnerId;
 
             var freeMatchSlots =
                 bracket.MaxConcurrentMatches
