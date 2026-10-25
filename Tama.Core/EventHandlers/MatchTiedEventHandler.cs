@@ -32,6 +32,7 @@ public sealed class MatchTiedEventHandler(
 
         if (match.Next is null && bracket.AllowTie) // Final, co-champions
         {
+            logger.LogInformation("Co-champions picked for bracket {BracketId}", bracket.Id);
             match.State = MatchState.Complete;
             bracket.State = MatchState.Complete;
             await eventBus.PublishAsync(
@@ -40,6 +41,7 @@ public sealed class MatchTiedEventHandler(
         }
         else
         {
+            logger.LogInformation("Awaiting tiebreak for match {MatchId}", match.Id);
             match.State = MatchState.AwaitingTiebreak;
 
             var freeMatchSlots =

@@ -35,11 +35,18 @@ public sealed class MatchEndedEventHandler(
 
         if (match.Next is null) // Final
         {
+            logger.LogInformation("Champion picked for bracket {BracketId}", bracket.Id);
             bracket.State = MatchState.Complete;
             await eventBus.PublishAsync(new AnnounceChampionEvent([match.WinnerId!.Value]));
         }
         else
         {
+            logger.LogInformation(
+                "Seeding winner of match {MatchId} into {NextMatchId}",
+                match.Id,
+                match.Next.Id
+            );
+
             if (match.SeedsLeftOfNext)
                 match.Next.LeftId = match.WinnerId;
             else
