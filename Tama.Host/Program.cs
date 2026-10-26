@@ -9,7 +9,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateBootstrapLogger()
 
 try
 {
-    Log.Information("Starting Nino host");
+    Log.Information("Starting Tama host");
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +47,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Nino host terminated unexpectedly");
+    Log.Fatal(ex, "Tama host terminated unexpectedly");
 }
 finally
 {
