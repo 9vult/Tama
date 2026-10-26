@@ -103,5 +103,6 @@ public sealed class MatchTiedEventHandler(
                 );
             }
         }
+        await db.SaveChangesAsync();
     }
 }

@@ -104,5 +104,6 @@ public sealed class MatchEndedEventHandler(
                 );
             }
         }
+        await db.SaveChangesAsync();
     }
 }

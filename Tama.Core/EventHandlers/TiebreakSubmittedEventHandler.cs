@@ -107,5 +107,6 @@ public sealed class TiebreakSubmittedEventHandler(
                 );
             }
         }
+        await db.SaveChangesAsync();
     }
 }
