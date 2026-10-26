@@ -87,7 +87,7 @@ public sealed class Match
     /// <summary>
     /// <see langword="true"/> if this match is ready to be started
     /// </summary>
-    public bool IsReady => State is MatchState.Pending && Left is not null && Right is not null;
+    public bool IsReady => State is MatchState.Pending && LeftId is not null && RightId is not null;
 
     /// <summary>
     /// Time the match was created

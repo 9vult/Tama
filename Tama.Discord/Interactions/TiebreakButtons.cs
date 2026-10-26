@@ -30,6 +30,8 @@ public sealed class TiebreakButtons(
         var guild = client.GetGuild(interaction.GuildId!.Value);
         var member = guild.GetUser(interaction.User.Id);
 
+        await interaction.DeferAsync();
+
         if (!member.GuildPermissions.Administrator)
         {
             await interaction.FollowupAsync(
@@ -83,6 +85,8 @@ public sealed class TiebreakButtons(
         var interaction = Context.Interaction;
         var guild = client.GetGuild(interaction.GuildId!.Value);
         var member = guild.GetUser(interaction.User.Id);
+
+        await interaction.DeferAsync();
 
         if (!member.GuildPermissions.Administrator)
         {
