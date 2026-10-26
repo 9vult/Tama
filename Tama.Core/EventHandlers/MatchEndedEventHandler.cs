@@ -61,16 +61,19 @@ public sealed class MatchEndedEventHandler(
             else
                 next.RightId = match.WinnerId;
 
+            await db.SaveChangesAsync();
+
             var freeMatchSlots =
                 bracket.MaxConcurrentMatches
                 - bracket.Matches.Count(m => m.State is MatchState.Active);
 
-            var nextMatches = bracket
-                .Matches.Where(m => m.IsReady)
+            var nextMatches = await db
+                .Matches.Where(m => m.BracketId == bracket.Id)
+                .Where(m => m.LeftId != null && m.RightId != null && m.State == MatchState.Pending)
                 .OrderBy(m => m.Round)
                 .ThenBy(m => m.Index)
                 .Take(Math.Max(0, freeMatchSlots))
-                .ToList();
+                .ToListAsync();
 
             foreach (var nextMatch in nextMatches)
             {
@@ -101,7 +104,5 @@ public sealed class MatchEndedEventHandler(
                 );
             }
         }
-
-        await db.SaveChangesAsync();
     }
 }
