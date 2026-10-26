@@ -30,6 +30,7 @@ public sealed class MatchEndedEventHandler(
 
         match.State = MatchState.Complete;
         match.WinnerId = @event.Result is PollResult.Left ? match.LeftId : match.RightId;
+        var winner = @event.Result is PollResult.Left ? match.Left : match.Right;
 
         if (match.NextId is null) // Final
         {
@@ -40,7 +41,7 @@ public sealed class MatchEndedEventHandler(
                     bracket.Id,
                     bracket.Title,
                     bracket.ChannelId,
-                    [EntryDto.FromEntry(match.Winner!)]
+                    [EntryDto.FromEntry(winner!)]
                 )
             );
         }
