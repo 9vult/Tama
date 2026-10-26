@@ -63,6 +63,7 @@ public sealed class MessageUpdateHandler(
             await message.Thread.ModifyAsync(thread =>
             {
                 thread.Locked = true;
+                thread.Archived = true;
             });
         }
     }
