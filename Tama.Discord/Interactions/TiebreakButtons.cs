@@ -42,7 +42,6 @@ public sealed class TiebreakButtons(
         }
 
         await eventBus.PublishAsync(new TiebreakSubmittedEvent(matchId, PollResult.Left));
-        await interaction.FollowupAsync("Your response has been recorded", ephemeral: true);
 
         var infoResult = await matchInfoHandler.HandleAsync(new GetMatchInfoQuery(matchId));
         if (!infoResult.IsSuccess)
@@ -98,7 +97,6 @@ public sealed class TiebreakButtons(
         }
 
         await eventBus.PublishAsync(new TiebreakSubmittedEvent(matchId, PollResult.Right));
-        await interaction.FollowupAsync("Your response has been recorded", ephemeral: true);
 
         var infoResult = await matchInfoHandler.HandleAsync(new GetMatchInfoQuery(matchId));
         if (!infoResult.IsSuccess)
