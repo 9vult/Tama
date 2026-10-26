@@ -99,7 +99,6 @@ public sealed class MatchTiedEventHandler(
                         bracket.MatchDuration
                     )
                 );
-                await Task.Delay(500); // Ensure all messages are created in order
             }
         }
 

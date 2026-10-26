@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Tama.Core.Dtos;
 using Tama.Core.Events;
 using Tama.Domain.Enums;
@@ -56,7 +57,6 @@ public sealed class BracketReadyEventHandler(TamaDbContext db, IEventBus eventBu
                     bracket.MatchDuration
                 )
             );
-            await Task.Delay(500); // Ensure all messages are created in order
         }
 
         await db.SaveChangesAsync();
