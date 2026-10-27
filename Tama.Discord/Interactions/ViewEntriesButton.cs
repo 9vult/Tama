@@ -47,7 +47,7 @@ public sealed class ViewEntriesButton(
         var b = new StringBuilder();
         foreach (var entry in data.Entries)
         {
-            b.AppendLine($"<@{entry.SubmitterId}> - [{entry.Title}]({entry.SubmissionUrl})");
+            b.AppendLine($"<@{entry.SubmitterId}>: [{entry.Title}]({entry.SubmissionUrl})");
         }
 
         var embed = new EmbedBuilder()
@@ -62,7 +62,7 @@ public sealed class ViewEntriesButton(
             var prevId = $"tama.view:{bracketId}:{data.Page - 1}";
             var nextId = $"tama.view:{bracketId}:{data.Page + 1}";
 
-            var hasPrev = data.Page != 0;
+            var hasPrev = data.Page > 0;
             var hasNext = data.Page < data.PageCount - 1;
 
             component = new ComponentBuilder()
