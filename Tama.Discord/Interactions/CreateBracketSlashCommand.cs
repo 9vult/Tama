@@ -2,6 +2,7 @@
 
 using Discord;
 using Discord.Interactions;
+using Discord.Rest;
 using Discord.WebSocket;
 using Tama.Core.Features;
 using Tama.Core.Features.Commands.Brackets.Create;
@@ -77,8 +78,19 @@ public sealed class CreateBracketSlashCommand(
             return ExecutionResult.Success;
         }
 
-        // Generate a role for the bracket
-        var role = await guild.CreateRoleAsync(title);
+        // Generate a role for the
+        RestRole role;
+        try
+        {
+            role = await guild.CreateRoleAsync(title);
+        }
+        catch (Exception ex)
+        {
+            await interaction.FollowupAsync(
+                "Failed to create role! Please re-check Tama-chan's permissions"
+            );
+            return ExecutionResult.Success;
+        }
 
         var command = new CreateBracketCommand(
             GroupId.From(guild.Id),
