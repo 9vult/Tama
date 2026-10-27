@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Tama.Core.Dtos;
 using Tama.Core.Events;
 using Tama.Core.Services;
 using Tama.Domain.Entities;
@@ -119,7 +120,9 @@ public sealed class SubmitEntriesHandler(
         await db.Entries.AddAsync(entry);
         await db.SaveChangesAsync();
 
-        await eventBus.PublishAsync(new EntrySubmittedEvent(bracket.Id));
+        await eventBus.PublishAsync(
+            new EntrySubmittedEvent(BracketDto.FromBracket(bracket), bracket.Entries.Count)
+        );
         return Success(new SubmitEntriesResult(bracket.RoleId));
     }
 }

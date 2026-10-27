@@ -22,7 +22,7 @@ public sealed class EntrySubmittedEventHandler(
         var bracket = await db
             .Brackets.Include(b => b.Entries)
             .Include(b => b.Matches)
-            .FirstOrDefaultAsync(b => b.Id == @event.BracketId);
+            .FirstOrDefaultAsync(b => b.Id == @event.Bracket.Id);
 
         if (bracket is null)
             return;
