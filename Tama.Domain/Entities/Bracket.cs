@@ -13,6 +13,7 @@ public sealed class Bracket
     public required GroupId GroupId { get; init; }
     public required ChannelId ChannelId { get; init; }
     public required UserId CreatorId { get; init; }
+    public required RoleId RoleId { get; init; }
 
     /// <summary>
     /// Title of the bracket

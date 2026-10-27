@@ -66,6 +66,10 @@ namespace Tama.Core.Migrations
                     b.Property<int>("MaxConcurrentMatches")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 

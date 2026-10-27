@@ -53,6 +53,7 @@ public sealed class BracketReadyEventHandler(TamaDbContext db, IEventBus eventBu
                     bracket.Title,
                     match.Title,
                     bracket.IsAnonymous,
+                    bracket.RoleId,
                     bracket.ChannelId,
                     bracket.MatchDuration
                 )

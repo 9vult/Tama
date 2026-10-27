@@ -20,14 +20,6 @@ public class CreateBracketHandler(
     /// <inheritdoc />
     public async Task<Result<CreateBracketResponse>> HandleAsync(CreateBracketCommand command)
     {
-        var hasConflict = await db.Brackets.AnyAsync(b =>
-            b.GroupId == command.GroupId
-            && b.Title == command.Title
-            && b.State != MatchState.Complete
-        );
-        if (hasConflict)
-            return Fail(ResultStatus.BracketConflict);
-
         if (command.EntryLimit < 2 || !BitOperations.IsPow2(command.EntryLimit))
             return Fail(ResultStatus.BadRequest, "EntryLimit is not a power of 2");
 
@@ -35,6 +27,7 @@ public class CreateBracketHandler(
         {
             GroupId = command.GroupId,
             ChannelId = command.ChannelId,
+            RoleId = command.RoleId,
             CreatorId = command.RequestedBy,
             Title = command.Title,
             Description = command.Description,

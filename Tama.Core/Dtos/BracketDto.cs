@@ -9,6 +9,7 @@ namespace Tama.Core.Dtos;
 public sealed record BracketDto(
     BracketId Id,
     ChannelId ChannelId,
+    RoleId RoleId,
     string Title,
     string Description,
     int EntryLimit,
@@ -24,6 +25,7 @@ public sealed record BracketDto(
         return new BracketDto(
             bracket.Id,
             bracket.ChannelId,
+            bracket.RoleId,
             bracket.Title,
             bracket.Description,
             bracket.EntryLimit,

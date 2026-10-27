@@ -27,6 +27,7 @@ public sealed class MatchStartedEventHandler(
 
         var description = new StringBuilder();
         description.AppendLine($"**{@event.BracketTitle}** - {@event.MatchTitle}");
+        description.AppendLine($"<@&{@event.RoleId}>");
         description.AppendLine();
 
         if (!@event.IsAnonymous)
@@ -71,7 +72,7 @@ public sealed class MatchStartedEventHandler(
             // Description
             await channel.SendMessageAsync(
                 components: components,
-                allowedMentions: new AllowedMentions(AllowedMentionTypes.None)
+                allowedMentions: new AllowedMentions(AllowedMentionTypes.Roles)
             );
 
             // Poll

@@ -42,19 +42,26 @@ public sealed class ModalSubmitted(
             return;
         }
 
+        var randomize = modal.CheckedSettings.Contains("randomize");
+        var notifyMe = modal.CheckedSettings.Contains("notify");
+
         var command = new SubmitEntriesCommand(
             bracketId,
             UserId.From(member.Id),
             first,
             second,
             third,
-            modal.Randomize
+            randomize
         );
 
         var response = await submitEntriesHandler.HandleAsync(command);
         if (response.IsSuccess)
         {
             await interaction.FollowupAsync("Your response has been recorded.", ephemeral: true);
+
+            if (notifyMe)
+                await member.AddRoleAsync(response.Value.RoleId.Value);
+
             return;
         }
 

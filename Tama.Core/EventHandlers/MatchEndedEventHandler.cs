@@ -99,6 +99,7 @@ public sealed class MatchEndedEventHandler(
                         bracket.Title,
                         nextMatch.Title,
                         bracket.IsAnonymous,
+                        bracket.RoleId,
                         bracket.ChannelId,
                         bracket.MatchDuration
                     )

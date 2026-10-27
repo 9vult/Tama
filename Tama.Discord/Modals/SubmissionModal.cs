@@ -15,12 +15,6 @@ public sealed class SubmissionModal : IModal
         """
             **Submissions must be AnimeThemes.moe video page links.**
             Example: <https://animethemes.moe/anime/clannad/ED1-NCBD1080>
-
-            Please fill out your first, second, and third choice.
-            If your first choice has already been submitted,
-            your second choice will be picked, and so on.
-            If all three of your choices have already been submitted,
-            you can try again with new choices. 
             """;
 
     [RequiredInput]
@@ -38,7 +32,20 @@ public sealed class SubmissionModal : IModal
     [ModalTextInput("choice-3", maxLength: Length.Url)]
     public string ThirdChoice { get; set; } = string.Empty;
 
-    [InputLabel("Randomize Order")]
-    [ModalCheckbox("randomize")]
-    public bool Randomize { get; set; } = false;
+    [RequiredInput(false)]
+    [InputLabel("Options")]
+    [ModalCheckboxGroup(customId: "toggles", minValues: 0, maxValues: 2)]
+    [ModalCheckboxGroupOption(
+        "Randomize Order",
+        "randomize",
+        "Shuffle submissions",
+        defaultState: false
+    )]
+    [ModalCheckboxGroupOption(
+        "Notify Me",
+        "notify",
+        "Notifies you when it's time to vote",
+        defaultState: true
+    )]
+    public string[] CheckedSettings { get; set; } = [];
 }

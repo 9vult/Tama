@@ -70,14 +70,20 @@ public sealed class CreateBracketSlashCommand(
                 - Send Polls
                 - Create Public Threads
                 - Manage Threads
+                - Manage Roles
+                - Mention Everyone
                 """
             );
             return ExecutionResult.Success;
         }
 
+        // Generate a role for the bracket
+        var role = await guild.CreateRoleAsync(title);
+
         var command = new CreateBracketCommand(
             GroupId.From(guild.Id),
             ChannelId.From(channel.Id),
+            RoleId.From(role.Id),
             UserId.From(member.Id),
             title,
             description ?? string.Empty,
@@ -122,7 +128,9 @@ public sealed class CreateBracketSlashCommand(
                 && (guildPerms.EmbedLinks || channelPerms.EmbedLinks)
                 && (guildPerms.SendPolls || channelPerms.SendPolls)
                 && (guildPerms.CreatePublicThreads || channelPerms.CreatePublicThreads)
-                && (guildPerms.ManageThreads || channelPerms.ManageThreads);
+                && (guildPerms.ManageThreads || channelPerms.ManageThreads)
+                && (guildPerms.ManageRoles || channelPerms.ManageRoles)
+                && (guildPerms.MentionEveryone || channelPerms.MentionEveryone);
         }
     }
 

@@ -8,6 +8,7 @@ namespace Tama.Core.Features.Commands.Brackets.Create;
 public sealed record CreateBracketCommand(
     GroupId GroupId,
     ChannelId ChannelId,
+    RoleId RoleId,
     UserId RequestedBy,
     string Title,
     string Description,

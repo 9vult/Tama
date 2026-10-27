@@ -6,7 +6,7 @@ using Tama.Core.Events;
 using Tama.Core.Services;
 using Tama.Domain.Entities;
 using Tama.Domain.Enums;
-using static Tama.Core.Features.Result;
+using static Tama.Core.Features.Result<Tama.Core.Features.Commands.Entries.Submit.SubmitEntriesResult>;
 
 namespace Tama.Core.Features.Commands.Entries.Submit;
 
@@ -15,10 +15,10 @@ public sealed class SubmitEntriesHandler(
     IEventBus eventBus,
     IAnimeThemesService atService,
     ILogger<SubmitEntriesHandler> logger
-) : ICommandHandler<SubmitEntriesCommand, Result>
+) : ICommandHandler<SubmitEntriesCommand, Result<SubmitEntriesResult>>
 {
     /// <inheritdoc />
-    public async Task<Result> HandleAsync(SubmitEntriesCommand command)
+    public async Task<Result<SubmitEntriesResult>> HandleAsync(SubmitEntriesCommand command)
     {
         var bracket = await db
             .Brackets.Include(b => b.Entries)
@@ -120,6 +120,6 @@ public sealed class SubmitEntriesHandler(
         await db.SaveChangesAsync();
 
         await eventBus.PublishAsync(new EntrySubmittedEvent(bracket.Id));
-        return Success();
+        return Success(new SubmitEntriesResult(bracket.RoleId));
     }
 }

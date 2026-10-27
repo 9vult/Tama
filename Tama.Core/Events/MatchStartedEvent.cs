@@ -13,6 +13,7 @@ public sealed record MatchStartedEvent(
     string BracketTitle,
     string MatchTitle,
     bool IsAnonymous,
+    RoleId RoleId,
     ChannelId ChannelId,
     MatchDuration MatchDuration
 ) : IEvent;

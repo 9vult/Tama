@@ -11,7 +11,7 @@ using Tama.Core;
 namespace Tama.Core.Migrations
 {
     [DbContext(typeof(TamaDbContext))]
-    [Migration("20261027002227_InitialCreate")]
+    [Migration("20261027011231_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -68,6 +68,10 @@ namespace Tama.Core.Migrations
 
                     b.Property<int>("MaxConcurrentMatches")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
