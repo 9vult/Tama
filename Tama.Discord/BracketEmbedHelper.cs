@@ -52,7 +52,7 @@ public static class BracketEmbedHelper
             .WithTitle(bracket.Title)
             .WithDescription(description.ToString())
             .WithFooter($"{currentSubmissionCount}/{bracket.EntryLimit}")
-            .WithCurrentTimestamp()
+            .WithTimestamp(bracket.CreatedAt)
             .Build();
     }
 }

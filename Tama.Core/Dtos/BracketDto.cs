@@ -17,7 +17,8 @@ public sealed record BracketDto(
     bool AllowOpenings,
     bool AllowEndings,
     bool AllowInserts,
-    bool IsAnonymous
+    bool IsAnonymous,
+    DateTimeOffset CreatedAt
 )
 {
     public static BracketDto FromBracket(Bracket bracket)
@@ -33,7 +34,8 @@ public sealed record BracketDto(
             bracket.AllowOpenings,
             bracket.AllowEndings,
             bracket.AllowInserts,
-            bracket.IsAnonymous
+            bracket.IsAnonymous,
+            bracket.CreatedAt
         );
     }
 }
