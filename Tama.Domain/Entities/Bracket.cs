@@ -20,6 +20,9 @@ public sealed class Bracket
     [MaxLength(Length.Title)]
     public required string Title { get; init; }
 
+    [MaxLength(Length.Description)]
+    public required string Description { get; set; }
+
     /// <summary>
     /// <see langword="true"/> if ties are allowed in the finals
     /// </summary>

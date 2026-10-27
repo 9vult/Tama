@@ -10,6 +10,7 @@ public sealed record CreateBracketCommand(
     ChannelId ChannelId,
     UserId RequestedBy,
     string Title,
+    string Description,
     bool AllowTie,
     int EntryLimit,
     int MaxConcurrentMatches,

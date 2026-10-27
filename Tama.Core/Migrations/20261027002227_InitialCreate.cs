@@ -20,6 +20,11 @@ namespace Tama.Core.Migrations
                     ChannelId = table.Column<string>(type: "TEXT", nullable: false),
                     CreatorId = table.Column<string>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Description = table.Column<string>(
+                        type: "TEXT",
+                        maxLength: 512,
+                        nullable: false
+                    ),
                     AllowTie = table.Column<bool>(type: "INTEGER", nullable: false),
                     EntryLimit = table.Column<int>(type: "INTEGER", nullable: false),
                     MaxConcurrentMatches = table.Column<int>(type: "INTEGER", nullable: false),

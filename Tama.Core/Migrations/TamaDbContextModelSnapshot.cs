@@ -45,6 +45,11 @@ namespace Tama.Core.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("EntryLimit")
                         .HasColumnType("INTEGER");
 

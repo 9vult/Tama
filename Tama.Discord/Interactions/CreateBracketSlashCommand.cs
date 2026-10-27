@@ -27,11 +27,14 @@ public sealed class CreateBracketSlashCommand(
         bool allowEndings,
         bool anonymousMatches,
         bool allowFinalTie,
+        [MaxLength(Length.Description)] string? description = null,
         int maxConcurrentMatches = 2,
         MatchDurationChoices matchDuration = MatchDurationChoices.OneDay
     )
     {
         title = title.Trim();
+        description = description?.Trim().Replace("\\n", "\n");
+
         var interaction = Context.Interaction;
         var guild = client.GetGuild(interaction.GuildId!.Value);
         var member = guild.GetUser(interaction.User.Id);
@@ -77,6 +80,7 @@ public sealed class CreateBracketSlashCommand(
             ChannelId.From(channel.Id),
             UserId.From(member.Id),
             title,
+            description ?? string.Empty,
             allowFinalTie,
             (int)entryLimit,
             maxConcurrentMatches,

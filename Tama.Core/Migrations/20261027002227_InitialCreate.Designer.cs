@@ -11,7 +11,7 @@ using Tama.Core;
 namespace Tama.Core.Migrations
 {
     [DbContext(typeof(TamaDbContext))]
-    [Migration("20261025163816_InitialCreate")]
+    [Migration("20261027002227_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -46,6 +46,11 @@ namespace Tama.Core.Migrations
 
                     b.Property<string>("CreatorId")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("EntryLimit")

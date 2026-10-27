@@ -27,6 +27,13 @@ public sealed class BracketCreatedEventHandler(
         }
 
         var description = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(bracket.Description))
+        {
+            description.AppendLine(bracket.Description);
+            description.AppendLine();
+        }
+
         description.AppendLine("Bracket Settings:");
         description.AppendLine($"- Entry limit: {bracket.EntryLimit}");
         description.Append("- Match duration: ");

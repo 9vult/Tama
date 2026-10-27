@@ -37,6 +37,7 @@ public class CreateBracketHandler(
             ChannelId = command.ChannelId,
             CreatorId = command.RequestedBy,
             Title = command.Title,
+            Description = command.Description,
             AllowTie = command.AllowTie,
             EntryLimit = command.EntryLimit,
             MaxConcurrentMatches = command.MaxConcurrentMatches,

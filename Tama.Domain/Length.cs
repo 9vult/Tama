@@ -12,4 +12,7 @@ public static class Length
 
     // 256
     public const int Url = 256;
+
+    // 512
+    public const int Description = 512;
 }
