@@ -37,4 +37,8 @@ public sealed class SubmissionModal : IModal
     [InputLabel("Third Choice")]
     [ModalTextInput("choice-3", maxLength: Length.Url)]
     public string ThirdChoice { get; set; } = string.Empty;
+
+    [InputLabel("Randomize Order")]
+    [ModalCheckbox("randomize")]
+    public bool Randomize { get; set; } = false;
 }

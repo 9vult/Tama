@@ -75,20 +75,27 @@ public sealed class SubmitEntriesHandler(
         )
             return Fail(ResultStatus.BadRequest, "TYPE");
 
+        Uri[] submissions =
+        [
+            command.FirstSubmission,
+            command.SecondSubmission,
+            command.ThirdSubmission,
+        ];
+
+        // Randomize submission order if desired
+        if (command.Randomize)
+            Random.Shared.Shuffle(submissions);
+
         // Find the first submission that hasn't been submitted yet
-        Uri submission;
         var existingSubs = bracket.Entries.Select(e => e.UniqueThemeId).ToHashSet();
-        if (!existingSubs.Contains(atService.GetUniqueThemeId(command.FirstSubmission)))
-            submission = command.ThirdSubmission;
-        else if (!existingSubs.Contains(atService.GetUniqueThemeId(command.SecondSubmission)))
-            submission = command.SecondSubmission;
-        else if (!existingSubs.Contains(atService.GetUniqueThemeId(command.ThirdSubmission)))
-            submission = command.ThirdSubmission;
-        else
+
+        var submission = submissions.FirstOrDefault(sub =>
+            !existingSubs.Contains(atService.GetUniqueThemeId(sub))
+        );
+        if (submission is null)
             return Fail(ResultStatus.EntryConflict);
 
         var animeDetails = await atService.GetAnimeDetailsAsync(submission);
-
         if (animeDetails.Title == string.Empty)
             return Fail(ResultStatus.Error);
 

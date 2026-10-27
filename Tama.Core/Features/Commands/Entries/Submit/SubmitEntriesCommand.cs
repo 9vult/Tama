@@ -9,5 +9,6 @@ public sealed record SubmitEntriesCommand(
     UserId SubmitterId,
     Uri FirstSubmission,
     Uri SecondSubmission,
-    Uri ThirdSubmission
+    Uri ThirdSubmission,
+    bool Randomize
 ) : ICommand;

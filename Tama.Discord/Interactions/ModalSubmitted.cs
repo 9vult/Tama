@@ -47,7 +47,8 @@ public sealed class ModalSubmitted(
             UserId.From(member.Id),
             first,
             second,
-            third
+            third,
+            modal.Randomize
         );
 
         var response = await submitEntriesHandler.HandleAsync(command);
