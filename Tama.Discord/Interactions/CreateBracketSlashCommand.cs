@@ -8,6 +8,7 @@ using Tama.Core.Features.Commands.Brackets.Create;
 using Tama.Domain;
 using Tama.Domain.Enums;
 using Tama.Domain.ValueObjects;
+using RuntimeResult = Discord.Interactions.RuntimeResult;
 
 namespace Tama.Discord.Interactions;
 
@@ -24,7 +25,7 @@ public sealed class CreateBracketSlashCommand(
         EntryLimitChoices entryLimit,
         bool allowOpenings,
         bool allowEndings,
-        bool isAnonymous,
+        bool anonymousMatches,
         bool allowFinalTie,
         int maxConcurrentMatches = 2,
         MatchDurationChoices matchDuration = MatchDurationChoices.OneDay
@@ -83,7 +84,7 @@ public sealed class CreateBracketSlashCommand(
             allowOpenings,
             allowEndings,
             false,
-            isAnonymous
+            anonymousMatches
         );
 
         var result = await createBracketHandler.HandleAsync(command);

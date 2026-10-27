@@ -54,7 +54,7 @@ public sealed class BracketCreatedEventHandler(
                 : ":star_struck: Matches are not anonymous"
         );
         if (bracket.IsAnonymous)
-            description.AppendLine("*(Overall winner is not anonymous)*");
+            description.AppendLine("*Details will be revealed after a winner is determined.*");
 
         var embed = new EmbedBuilder()
             .WithTitle(bracket.Title)

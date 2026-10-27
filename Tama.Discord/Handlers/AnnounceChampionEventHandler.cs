@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 using System.Text;
+using Discord;
 using Discord.WebSocket;
 using Tama.Core.Events;
 
@@ -31,9 +32,14 @@ public sealed class AnnounceChampionEventHandler(
         foreach (var champ in @event.Champions)
             description.AppendLine($":crown: <@{champ.SubmitterId}>: **{champ.Title}**");
 
+        var buttonId = $"tama.view:{@event.BracketId}:-1";
+        var viewEntriesButton = new ComponentBuilder()
+            .WithButton("View Entries", buttonId, emote: Emoji.Parse(":card_box:"))
+            .Build();
+
         try
         {
-            await channel.SendMessageAsync(description.ToString());
+            await channel.SendMessageAsync(description.ToString(), components: viewEntriesButton);
         }
         catch (Exception ex)
         {
