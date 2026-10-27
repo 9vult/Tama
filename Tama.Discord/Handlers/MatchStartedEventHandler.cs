@@ -82,7 +82,16 @@ public sealed class MatchStartedEventHandler(
             );
 
             // Open thread
-            await channel.CreateThreadAsync(@event.MatchTitle, message: pollMessage);
+
+            var threadType =
+                channel.ChannelType is ChannelType.News
+                    ? ThreadType.NewsThread
+                    : ThreadType.PublicThread;
+            await channel.CreateThreadAsync(
+                @event.MatchTitle,
+                message: pollMessage,
+                type: threadType
+            );
 
             logger.LogInformation(
                 "Posted match {MatchId} in channel {ChannelId}",
