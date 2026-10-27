@@ -46,7 +46,7 @@ public sealed class MatchStartedEventHandler(
 
         var poll = new PollProperties
         {
-            Question = new PollMediaProperties { Text = "Pick your favorite" },
+            Question = new PollMediaProperties { Text = "Who wins?" },
             Duration = @event.MatchDuration switch
             {
                 MatchDuration.OneHour => 1,
