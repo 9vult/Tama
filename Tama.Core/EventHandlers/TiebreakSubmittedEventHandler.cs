@@ -79,9 +79,13 @@ public sealed class TiebreakSubmittedEventHandler(
                 .Take(Math.Max(0, freeMatchSlots))
                 .ToListAsync();
 
+            // Make sure we flag the matches before introducing delays
+            foreach (var nextMatch in nextMatches)
+                nextMatch.State = MatchState.Active;
+            await db.SaveChangesAsync();
+
             foreach (var nextMatch in nextMatches)
             {
-                nextMatch.State = MatchState.Active;
                 await eventBus.PublishAsync(
                     new MatchStartedEvent(
                         nextMatch.Id,
@@ -107,8 +111,9 @@ public sealed class TiebreakSubmittedEventHandler(
                         bracket.MatchDuration
                     )
                 );
+
+                await Task.Delay(TimeSpan.FromSeconds(3)); // Give each match breathing room
             }
         }
-        await db.SaveChangesAsync();
     }
 }

@@ -58,6 +58,8 @@ public sealed class BracketReadyEventHandler(TamaDbContext db, IEventBus eventBu
                     bracket.MatchDuration
                 )
             );
+
+            await Task.Delay(TimeSpan.FromSeconds(3)); // Give each match breathing room
         }
 
         await db.SaveChangesAsync();

@@ -76,9 +76,16 @@ public sealed class MatchEndedEventHandler(
                 .Take(Math.Max(0, freeMatchSlots))
                 .ToListAsync();
 
+            // Make sure we flag the matches before introducing delays
+            foreach (var nextMatch in nextMatches)
+                nextMatch.State = MatchState.Active;
+            await db.SaveChangesAsync();
+
+            // Allow time for poll close messages to show up
+            await Task.Delay(TimeSpan.FromSeconds(bracket.MaxConcurrentMatches * 3));
+
             foreach (var nextMatch in nextMatches)
             {
-                nextMatch.State = MatchState.Active;
                 await eventBus.PublishAsync(
                     new MatchStartedEvent(
                         nextMatch.Id,
@@ -104,8 +111,9 @@ public sealed class MatchEndedEventHandler(
                         bracket.MatchDuration
                     )
                 );
+
+                await Task.Delay(TimeSpan.FromSeconds(3)); // Give each match breathing room
             }
         }
-        await db.SaveChangesAsync();
     }
 }
