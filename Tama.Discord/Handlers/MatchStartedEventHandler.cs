@@ -60,8 +60,8 @@ public sealed class MatchStartedEventHandler(
             },
             Answers =
             [
-                new PollMediaProperties { Text = @event.Left.Title },
-                new PollMediaProperties { Text = @event.Right.Title },
+                new PollMediaProperties { Text = @event.Left.Title.Truncate(45) }, // max allowed is 55
+                new PollMediaProperties { Text = @event.Right.Title.Truncate(45) },
             ],
             AllowMultiselect = false,
             LayoutType = PollLayout.Default,
