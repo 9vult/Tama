@@ -82,7 +82,7 @@ public sealed class MatchEndedEventHandler(
             await db.SaveChangesAsync();
 
             // Allow time for poll close messages to show up
-            await Task.Delay(TimeSpan.FromSeconds(bracket.MaxConcurrentMatches * 3));
+            await Task.Delay(TimeSpan.FromSeconds(bracket.MaxConcurrentMatches * 4));
 
             foreach (var nextMatch in nextMatches)
             {
