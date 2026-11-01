@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Tama.Core.Dtos;
 using Tama.Core.Events;
 using Tama.Domain.Enums;
-using Tama.Domain.ValueObjects;
 
 namespace Tama.Core.EventHandlers;
 
@@ -62,17 +61,7 @@ public sealed class MatchTiedEventHandler(
 
             await db.SaveChangesAsync();
 
-            var freeMatchSlots =
-                bracket.MaxConcurrentMatches
-                - bracket.Matches.Count(m => m.State is MatchState.Active);
-
-            var nextMatches = await db
-                .Matches.Where(m => m.BracketId == bracket.Id)
-                .Where(m => m.LeftId != null && m.RightId != null && m.State == MatchState.Pending)
-                .OrderBy(m => m.Round)
-                .ThenBy(m => m.Index)
-                .Take(Math.Max(0, freeMatchSlots))
-                .ToListAsync();
+            var nextMatches = db.GetMatchesToStart(bracket.Id).ToList();
 
             // Make sure we flag the matches before introducing delays
             foreach (var nextMatch in nextMatches)
