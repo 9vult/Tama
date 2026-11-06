@@ -36,6 +36,10 @@ public sealed class MatchEndedEventHandler(
         {
             logger.LogInformation("Champion picked for bracket {BracketId}", bracket.Id);
             bracket.State = MatchState.Complete;
+
+            // Allow time for poll close messages to show up
+            await Task.Delay(TimeSpan.FromSeconds(bracket.MaxConcurrentMatches * 4));
+
             await eventBus.PublishAsync(
                 new AnnounceChampionEvent(
                     bracket.Id,

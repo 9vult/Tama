@@ -28,6 +28,9 @@ public sealed class MatchTiedEventHandler(
         if (match.State is not MatchState.Active)
             return;
 
+        // Allow time for poll close messages to show up
+        await Task.Delay(TimeSpan.FromSeconds(bracket.MaxConcurrentMatches * 4));
+
         if (match.NextId is null && bracket.AllowTie) // Final, co-champions
         {
             logger.LogInformation("Co-champions picked for bracket {BracketId}", bracket.Id);
